@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ajudaki_mobile_flutter_architecture/data/repositories/people_repository.dart';
-import 'package:ajudaki_mobile_flutter_architecture/data/services/api/health_api_client.dart';
+import 'package:ajudaki_mobile_flutter_architecture/data/services/api/api_client_health_path.dart';
 import 'package:ajudaki_mobile_flutter_architecture/core/logger.dart';
 
 void main() async {
@@ -9,7 +9,7 @@ void main() async {
   Logger.initialize();
   Logger.instance.info('App iniciando...');
 
-  final healthClient = HealthApiClient();
+  final healthClient = ApiClientHealthPath();
   try {
     final isAlive = await healthClient.get();
     if (isAlive) {

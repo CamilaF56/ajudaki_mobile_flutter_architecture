@@ -1,10 +1,10 @@
 import 'package:ajudaki_mobile_flutter_architecture/domain/models/person.dart';
 import 'package:ajudaki_mobile_flutter_architecture/data/services/api/models/person_api_model.dart';
-import 'package:ajudaki_mobile_flutter_architecture/data/services/api/people_api_client.dart';
+import 'package:ajudaki_mobile_flutter_architecture/data/services/api/api_client_people_path.dart';
 import 'repository.dart';
 
 class PeopleRepository extends Repository<PersonApiModel, Person> {
-  PeopleRepository() : super(PeopleApiClient());
+  PeopleRepository() : super(ApiClientPeoplePath());
 
   @override
   Person convert(PersonApiModel apiModel) {

@@ -1,6 +1,6 @@
 import 'api_client_web_mobile.dart';
 
-class HealthApiClient {
+class ApiClientHealthPath {
     Future<bool> get() async {
     final result = await ApiClientWebMobile.instance.get('/api/health');
     final statusCode = result['statusCode'] as int;
