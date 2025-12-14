@@ -1,6 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:ajudaki_mobile_flutter_architecture/data/repositories/people_repository.dart';
+import 'package:ajudaki_mobile_flutter_architecture/data/services/api/health_api_client.dart';
+import 'package:ajudaki_mobile_flutter_architecture/core/logger.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); // required for async before runApp
+  
+  Logger.initialize();
+  Logger.instance.info('App iniciando...');
+
+  final healthClient = HealthApiClient();
+  try {
+    final isAlive = await healthClient.get();
+    if (isAlive) {
+      Logger.instance.info('API está funcionando!');
+    } else {
+      throw Exception('API não está respondendo :( Você lembrou de ligar a API?');
+    }
+  } catch (e) {
+    Logger.instance.shout('$e');
+    Logger.instance.shout('O app não será iniciado. Erro: $e');
+    return;
+  }
+
   runApp(const MyApp());
 }
 
@@ -113,10 +135,21 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: _testPeopleRepository,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),
     );
+  }
+
+  void _testPeopleRepository() async {
+    final peopleRepository = PeopleRepository();
+    final allPeople = await peopleRepository.getAll();
+    allPeople.forEach((id, person) {
+      Logger.instance.info('ID: $id, Name: ${person.name}');
+    });
+
+    final person = await peopleRepository.get(1);
+    Logger.instance.info('ID: ${person?.id}, Name: ${person?.name}');
   }
 }
