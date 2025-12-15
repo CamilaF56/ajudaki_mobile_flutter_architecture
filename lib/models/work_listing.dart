@@ -1,18 +1,16 @@
+import 'work_type.dart';
+import 'professional.dart';
+import 'work_category.dart';
+
 class WorkListing {
   final int idWorkListing;
   final String name;
   final String description;
   final double suggestedValue;
   final String? pictureUrl;
-
-  final int idWorkCategory;
-  final String nameWorkCartegory;
-
-  final int idWorkType;
-  final String nameWorkType;
-
-  final int idProfessional;
-  final String nameProfessional;
+  final WorkCategory? category;
+  final WorkType? type;
+  final Professional? professional;
 
   WorkListing({
     required this.idWorkListing,
@@ -20,27 +18,25 @@ class WorkListing {
     required this.description,
     required this.suggestedValue,
     this.pictureUrl,
-    required this.idWorkCategory,
-    required this.nameWorkCartegory,
-    required this.idWorkType,
-    required this.nameWorkType,
-    required this.idProfessional,
-    required this.nameProfessional,
+    this.category,
+    this.type,
+    this.professional,
   });
 
   factory WorkListing.fromJson(Map<String, dynamic> json) {
     return WorkListing(
-      idWorkListing: json['idServico'],
+      idWorkListing: (json['idServico'] as num).toInt(),
       name: json['nome'],
       description: json['descricao'],
       suggestedValue: (json['valorSugerido'] as num).toDouble(),
       pictureUrl: json['fotoUrl'],
-      idWorkCategory: json['idAreaAtuacao'],
-      nameWorkCartegory: json['nomeAreaAtuacao'],
-      idWorkType: json['idTipoServico'],
-      nameWorkType: json['nomeTipoServico'],
-      idProfessional: json['idProfissional'],
-      nameProfessional: json['nomeProfissional'],
+      category: WorkCategory.fromJson(
+        json['areaAtuacao'] as Map<String, dynamic>,
+      ),
+      type: WorkType.fromJson(json['tipoServico'] as Map<String, dynamic>),
+      professional: Professional.fromJson(
+        json['profissional'] as Map<String, dynamic>,
+      ),
     );
   }
 }

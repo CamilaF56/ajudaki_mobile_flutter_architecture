@@ -1,10 +1,13 @@
 class WorkCategory {
   final int id;
-  final String nome;
+  final String name;
 
-  WorkCategory({required this.id, required this.nome});
+  WorkCategory({required this.id, required this.name});
 
   factory WorkCategory.fromJson(Map<String, dynamic> json) {
-    return WorkCategory(id: json['idAreaAtuacao'], nome: json['nome']);
+    return WorkCategory(
+      id: (json['idAreaAtuacao'] as num).toInt(),
+      name: json['nome'],
+    );
   }
 }
