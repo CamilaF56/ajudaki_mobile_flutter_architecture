@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ajudaki_mobile_flutter_architecture/data/repositories/people_repository.dart';
 import 'package:ajudaki_mobile_flutter_architecture/data/services/api/api_client.dart';
 import 'package:ajudaki_mobile_flutter_architecture/core/logger.dart';
 
@@ -146,7 +145,7 @@ class _MyHomePageState extends State<MyHomePage> {
     final apiClient = ApiClient();
     final allPeople = await apiClient.people.getAll();
     allPeople?.forEach((id, person) {
-      Logger.instance.info('ID: $id, Name: ${person?.name}');
+      Logger.instance.info('ID: $id, Name: ${person.name}');
     });
 
     final person = await apiClient.people.get(1);
