@@ -1,16 +1,16 @@
-import 'package:ajudaki_mobile_flutter_architecture/data/services/api/api_client.dart';
+import 'package:ajudaki_mobile_flutter_architecture/data/services/api/api_client_path.dart';
 import 'package:ajudaki_mobile_flutter_architecture/core/logger.dart';
 
 abstract class Repository<TApi, T> {
-  Repository(this.apiClient);
+  Repository(this.apiClientPath);
 
-  final ApiClient<TApi> apiClient;
+  final ApiClientPath<TApi> apiClientPath;
 
   Future<T?> convert(TApi apiModel);
 
   Future<Map<int, T?>> getAll() async {
     try {
-      final data = await apiClient.getAll();
+      final data = await apiClientPath.getAll();
       if (data == null) return {};
       final result = <int, T?>{};
       for (final entry in data.entries) {
@@ -25,7 +25,7 @@ abstract class Repository<TApi, T> {
 
   Future<T?> get(int id) async {
     try {
-      final data = await apiClient.get(id);
+      final data = await apiClientPath.get(id);
       if (data != null) return convert(data);
       return null;
     } catch (e) {

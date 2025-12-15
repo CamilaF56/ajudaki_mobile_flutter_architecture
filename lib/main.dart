@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ajudaki_mobile_flutter_architecture/data/repositories/people_repository.dart';
-import 'package:ajudaki_mobile_flutter_architecture/data/services/api/api_client_health_path.dart';
+import 'package:ajudaki_mobile_flutter_architecture/data/services/api/api_client.dart';
 import 'package:ajudaki_mobile_flutter_architecture/core/logger.dart';
 
 void main() async {
@@ -8,10 +8,10 @@ void main() async {
   
   Logger.initialize();
   Logger.instance.info('App iniciando...');
+  final apiClient = ApiClient();
 
-  final healthClient = ApiClientHealthPath();
   try {
-    final isAlive = await healthClient.get();
+    final isAlive = await apiClient.health.get();
     if (isAlive) {
       Logger.instance.info('API está funcionando!');
     } else {
@@ -143,13 +143,13 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _testPeopleRepository() async {
-    final peopleRepository = PeopleRepository();
-    final allPeople = await peopleRepository.getAll();
-    allPeople.forEach((id, person) {
+    final apiClient = ApiClient();
+    final allPeople = await apiClient.people.getAll();
+    allPeople?.forEach((id, person) {
       Logger.instance.info('ID: $id, Name: ${person?.name}');
     });
 
-    final person = await peopleRepository.get(1);
+    final person = await apiClient.people.get(1);
     Logger.instance.info('ID: ${person?.id}, Name: ${person?.name}');
   }
 }

@@ -1,42 +1,24 @@
-import 'dart:convert';
-import 'api_client_web_mobile.dart';
+import 'api_client_health_path.dart';
+import 'api_client_people_path.dart';
+import 'api_client_work_categories_path.dart';
+import 'api_client_work_listings_path.dart';
+import 'api_client_work_types_path.dart';
 
-typedef FromJson<T> = T Function(Map<String, dynamic> json);
+class ApiClient {
+  ApiClient() :
+    health = ApiClientHealthPath(),
+    people = ApiClientPeoplePath(),
+    workCategories = ApiClientWorkCategoriesPath(),
+    workListings = ApiClientWorkListingsPath(),
+    workTypes = ApiClientWorkTypesPath();
 
-class ApiClient<T> {
-  ApiClient({
-    required this.resource,
-    required this.fromJson,
-  });
+  static const String host = 'localhost';
+  static const int port = 5299;
+  static const Duration timeout = Duration(seconds: 5);
 
-  final String resource;
-  final FromJson<T> fromJson;
-
-  Future<Map<int, T>?> getAll() async {
-    final result = await ApiClientWebMobile.instance.get('/api/$resource');
-    final statusCode = result['statusCode'] as int;
-    final stringData = result['body'] as String?;
-
-    if (statusCode != 200) return null;
-
-    final Map<String, dynamic> jsonMap =
-        jsonDecode(stringData!) as Map<String, dynamic>;
-
-    return jsonMap.map(
-      (key, value) => MapEntry(
-        int.parse(key),
-        fromJson(value as Map<String, dynamic>),
-      ),
-    );
-  }
-
-  Future<T?> get(int id) async {
-    final result = await ApiClientWebMobile.instance.get('/api/$resource/$id');
-    final statusCode = result['statusCode'] as int;
-    final stringData = result['body'] as String?;
-
-    if (statusCode != 200) return null;
-
-    return fromJson(jsonDecode(stringData!));
-  }
+  final ApiClientHealthPath health;
+  final ApiClientPeoplePath people;
+  final ApiClientWorkCategoriesPath workCategories;
+  final ApiClientWorkListingsPath workListings;
+  final ApiClientWorkTypesPath workTypes;
 }
