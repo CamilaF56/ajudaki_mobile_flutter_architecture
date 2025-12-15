@@ -6,15 +6,17 @@ abstract class Repository<TApi, T> {
 
   final ApiClient<TApi> apiClient;
 
-  T convert(TApi apiModel);
+  Future<T?> convert(TApi apiModel);
 
-  Future<Map<int, T>> getAll() async {
+  Future<Map<int, T?>> getAll() async {
     try {
       final data = await apiClient.getAll();
-      if (data != null) {
-        return data.map((key, value) => MapEntry(key, convert(value)));
+      if (data == null) return {};
+      final result = <int, T?>{};
+      for (final entry in data.entries) {
+        result[entry.key] = await convert(entry.value);
       }
-      return {};
+      return result;
     } catch (e) {
       Logger.instance.info('Repository getAll error $e');
       return {};
