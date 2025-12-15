@@ -146,7 +146,7 @@ class _MyHomePageState extends State<MyHomePage> {
     final peopleRepository = PeopleRepository();
     final allPeople = await peopleRepository.getAll();
     allPeople.forEach((id, person) {
-      Logger.instance.info('ID: $id, Name: ${person.name}');
+      Logger.instance.info('ID: $id, Name: ${person?.name}');
     });
 
     final person = await peopleRepository.get(1);
