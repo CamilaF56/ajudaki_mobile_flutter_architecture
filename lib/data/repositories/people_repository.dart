@@ -7,7 +7,7 @@ class PeopleRepository extends Repository<PersonApiModel, Person> {
   PeopleRepository() : super(ApiClientPeoplePath());
 
   @override
-  Person convert(PersonApiModel apiModel) {
+  Future<Person> convert(PersonApiModel apiModel) async {
     return Person(
       id: apiModel.id,
       name: apiModel.name,
