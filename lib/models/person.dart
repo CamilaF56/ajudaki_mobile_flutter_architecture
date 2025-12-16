@@ -6,6 +6,7 @@ class Person extends Model {
   final String cellphone;
   final String? telephone;
   final String cep;
+  final String pictureUrl;
 
   Person({
     required super.id,
@@ -14,16 +15,18 @@ class Person extends Model {
     required this.cellphone,
     this.telephone,
     required this.cep,
+    required this.pictureUrl,
   });
 
   factory Person.fromJson(Map<String, dynamic> json) {
     return Person(
-      id: (json['idPessoa'] as num?)?.toInt() ?? 0,
+      id: (json['idpessoa'] as num?)?.toInt() ?? 0,
       name: json['nome'],
       cpf: json['cpf'],
       cellphone: json['celular'],
       telephone: json['telefone'],
       cep: json['cep'],
+      pictureUrl: json['fotoUrl'],
     );
   }
 }

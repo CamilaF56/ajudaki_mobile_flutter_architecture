@@ -7,7 +7,6 @@ class WorkListing extends Model {
   final String name;
   final String description;
   final double suggestedValue;
-  final String? pictureUrl;
   final WorkCategory? category;
   final WorkType? type;
   final Professional? professional;
@@ -17,7 +16,6 @@ class WorkListing extends Model {
     required this.name,
     required this.description,
     required this.suggestedValue,
-    this.pictureUrl,
     this.category,
     this.type,
     this.professional,
@@ -29,7 +27,6 @@ class WorkListing extends Model {
       name: json['nome'],
       description: json['descricao'],
       suggestedValue: (json['valorSugerido'] as num).toDouble(),
-      pictureUrl: json['fotoUrl'],
       category: WorkCategory.fromJson(
         json['areaAtuacao'] as Map<String, dynamic>,
       ),
