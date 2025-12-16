@@ -1,7 +1,8 @@
-class WorkType {
-  final int id;
+import 'model.dart';
+
+class WorkType extends Model {
   final String name;
-  WorkType({required this.id, required this.name});
+  WorkType({required super.id, required this.name});
 
   factory WorkType.fromJson(Map<String, dynamic> json) {
     return WorkType(

@@ -1,5 +1,6 @@
-class Person {
-  final int personId;
+import 'model.dart';
+
+class Person extends Model {
   final String name;
   final String cpf;
   final String cellphone;
@@ -7,7 +8,7 @@ class Person {
   final String cep;
 
   Person({
-    required this.personId,
+    required super.id,
     required this.name,
     required this.cpf,
     required this.cellphone,
@@ -17,7 +18,7 @@ class Person {
 
   factory Person.fromJson(Map<String, dynamic> json) {
     return Person(
-      personId: (json['idPessoa'] as num?)?.toInt() ?? 0,
+      id: (json['idPessoa'] as num?)?.toInt() ?? 0,
       name: json['nome'],
       cpf: json['cpf'],
       cellphone: json['celular'],

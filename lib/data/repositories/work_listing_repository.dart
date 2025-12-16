@@ -1,5 +1,5 @@
 import '../../models/work_listing.dart';
-import '../../utils/result.dart';
+import '../../utils/response.dart';
 import '../services/api/api_client.dart';
 
 class WorkListingRepository {
@@ -8,15 +8,15 @@ class WorkListingRepository {
 
   final ApiClient _apiClient;
 
-  Future<Result<List<WorkListing>>> getAll() {
+  Future<Response<List<WorkListing>>> getAll() {
     return _apiClient.getWorkListings();
   }
 
-  Future<Result<List<WorkListing>>> searchByTerm(String term) {
+  Future<Response<List<WorkListing>>> searchByTerm(String term) {
     return _apiClient.searchWorkListings(term);
   }
 
-  Future<Result<List<WorkListing>>> getByAreaAtuacao(int areaId) {
+  Future<Response<List<WorkListing>>> getByAreaAtuacao(int areaId) {
     return _apiClient.getWorkListingsByCategory(areaId);
   }
 }

@@ -1,6 +1,6 @@
 import '../../../models/work_listing.dart';
 import '../../../models/work_category.dart';
-import '../../../utils/result.dart';
+import '../../../utils/response.dart';
 import 'http_get_helper.dart';
 
 class ApiClient {
@@ -13,11 +13,11 @@ class ApiClient {
   final int _port;
   final HttpGetHelper _helper;
 
-  Future<Result<List<WorkListing>>> getWorkListings() {
+  Future<Response<List<WorkListing>>> getWorkListings() {
     return _helper.getList(_host, _port, '/api/servico', WorkListing.fromJson);
   }
 
-  Future<Result<List<WorkListing>>> searchWorkListings(String termo) {
+  Future<Response<List<WorkListing>>> searchWorkListings(String termo) {
     final encodedTerm = Uri.encodeQueryComponent(termo);
     return _helper.getList(
       _host,
@@ -27,7 +27,7 @@ class ApiClient {
     );
   }
 
-  Future<Result<List<WorkListing>>> getWorkListingsByCategory(int areaId) {
+  Future<Response<List<WorkListing>>> getWorkListingsByCategory(int areaId) {
     return _helper.getList(
       _host,
       _port,
@@ -36,7 +36,7 @@ class ApiClient {
     );
   }
 
-  Future<Result<List<WorkCategory>>> getWorkCategory() {
+  Future<Response<List<WorkCategory>>> getWorkCategory() {
     return _helper.getList(
       _host,
       _port,

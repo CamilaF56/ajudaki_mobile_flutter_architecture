@@ -1,8 +1,9 @@
-class WorkCategory {
-  final int id;
+import 'model.dart';
+
+class WorkCategory extends Model {
   final String name;
 
-  WorkCategory({required this.id, required this.name});
+  WorkCategory({required super.id, required this.name});
 
   factory WorkCategory.fromJson(Map<String, dynamic> json) {
     return WorkCategory(

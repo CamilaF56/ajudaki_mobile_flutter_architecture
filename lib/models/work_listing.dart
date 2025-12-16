@@ -1,9 +1,9 @@
+import 'model.dart';
 import 'work_type.dart';
 import 'professional.dart';
 import 'work_category.dart';
 
-class WorkListing {
-  final int idWorkListing;
+class WorkListing extends Model {
   final String name;
   final String description;
   final double suggestedValue;
@@ -13,7 +13,7 @@ class WorkListing {
   final Professional? professional;
 
   WorkListing({
-    required this.idWorkListing,
+    required super.id,
     required this.name,
     required this.description,
     required this.suggestedValue,
@@ -25,7 +25,7 @@ class WorkListing {
 
   factory WorkListing.fromJson(Map<String, dynamic> json) {
     return WorkListing(
-      idWorkListing: (json['idServico'] as num).toInt(),
+      id: (json['idServico'] as num).toInt(),
       name: json['nome'],
       description: json['descricao'],
       suggestedValue: (json['valorSugerido'] as num).toDouble(),

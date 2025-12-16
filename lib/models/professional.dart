@@ -1,14 +1,14 @@
-import 'package:ajudaki_mobile_flutter_architecture/models/person.dart';
+import 'model.dart';
+import 'person.dart';
 
-class Professional {
-  final int professionalId;
+class Professional extends Model {
   final Person? person;
 
-  Professional({required this.professionalId, this.person});
+  Professional({required super.id, this.person});
 
   factory Professional.fromJson(Map<String, dynamic> json) {
     return Professional(
-      professionalId: (json['idProfissional'] as num).toInt(),
+      id: (json['idProfissional'] as num).toInt(),
       person: Person.fromJson(json['pessoa']),
     );
   }

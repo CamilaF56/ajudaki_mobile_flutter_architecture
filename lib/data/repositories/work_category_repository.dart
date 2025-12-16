@@ -1,5 +1,5 @@
 import '../../models/work_category.dart';
-import '../../utils/result.dart';
+import '../../utils/response.dart';
 import '../services/api/api_client.dart';
 
 class WorkCategoryRepository {
@@ -10,20 +10,20 @@ class WorkCategoryRepository {
 
   List<WorkCategory>? _cachedCategories;
 
-  Future<Result<List<WorkCategory>>> getAll() async {
+  Future<Response<List<WorkCategory>>> getAll() async {
     if (_cachedCategories != null) {
-      return Future.value(Result.ok(_cachedCategories!));
+      return Future.value(Response.success(_cachedCategories!));
     }
 
     final result = await _apiClient.getWorkCategory();
 
-    if (result is Ok<List<WorkCategory>>) {
+    if (result is Success<List<WorkCategory>>) {
       _cachedCategories = result.value;
-      return Result.ok(result.value);
+      return Response.success(result.value);
     } else if (result is Error<List<WorkCategory>>) {
-      return Result.error(result.error);
+      return Response.error(result.error);
     } else {
-      return Result.error(Exception('Resultado inesperado'));
+      return Response.error(Exception('Resultado inesperado'));
     }
   }
 }
