@@ -14,15 +14,15 @@ class WorkListingEntry extends StatelessWidget {
       elevation: 1,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      color: const Color.fromRGBO(247, 242, 250, 1),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // imagem ou ícone padrão
             CircleAvatar(
               radius: 42,
-              backgroundColor: Colors.grey[200],
+              backgroundColor: const Color.fromRGBO(235, 236, 237, 1),
               child: ClipOval(
                 child: (pictureUrl != null && pictureUrl.isNotEmpty)
                     ? Image.network(

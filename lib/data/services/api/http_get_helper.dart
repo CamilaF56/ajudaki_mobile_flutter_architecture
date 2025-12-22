@@ -7,15 +7,16 @@ class HttpGetHelper {
     String host,
     int port,
     String path,
-    T Function(Map<String, dynamic>) fromJson,
-  ) async {
-    final url = Uri.http('$host:$port', path);
+    T Function(Map<String, dynamic>) fromJson, {
+    Map<String, String>? queryParameters,
+  }) async {
+    final uri = Uri.http('$host:$port', path, queryParameters);
 
     try {
-      final response = await http.get(url);
+      final response = await http.get(uri);
 
       if (response.statusCode != 200) {
-        return Response.error(Exception('Inaválido: ${response.statusCode}'));
+        return Response.error(Exception('Inválido: ${response.statusCode}'));
       }
 
       final jsonList = jsonDecode(response.body) as List<dynamic>;

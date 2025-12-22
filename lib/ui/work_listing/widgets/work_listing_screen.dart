@@ -28,10 +28,15 @@ class _WorkListingScreenState extends State<WorkListingScreen> {
     final vm = context.watch<WorkListingViewModel>();
 
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: const Color.fromRGBO(235, 236, 237, 1),
       body: Column(
         children: [
           const WorkListingTopBar(),
+          const Divider(
+            height: 1,
+            thickness: 2,
+            color: Color.fromRGBO(171, 186, 255, 1),
+          ),
           WorkListingFilters(
             categories: vm.categories,
             selectedCategory: vm.selectedCategory,

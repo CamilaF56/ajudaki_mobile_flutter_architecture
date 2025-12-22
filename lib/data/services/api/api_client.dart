@@ -18,12 +18,12 @@ class ApiClient {
   }
 
   Future<Response<List<WorkListing>>> searchWorkListings(String termo) {
-    final encodedTerm = Uri.encodeQueryComponent(termo);
     return _helper.getList(
       _host,
       _port,
-      '/api/servico/buscar?termo=$encodedTerm',
+      '/api/servico/buscar',
       WorkListing.fromJson,
+      queryParameters: {'termo': termo},
     );
   }
 

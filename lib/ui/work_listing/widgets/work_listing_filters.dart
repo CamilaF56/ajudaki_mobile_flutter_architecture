@@ -33,6 +33,13 @@ class WorkListingFilters extends StatelessWidget {
                   )
                   .toList(),
               onChanged: onCategoryChanged,
+              decoration: const InputDecoration(
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Color.fromRGBO(171, 186, 255, 1),
+                  ),
+                ),
+              ),
             ),
           ),
         ],

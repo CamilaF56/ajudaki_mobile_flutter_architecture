@@ -26,6 +26,8 @@ class WorkListingViewModel extends ChangeNotifier {
   List<WorkCategory> _categories = [];
   WorkCategory? _selectedCategory;
 
+  bool _isSearching = false;
+  String _searchTerm = '';
   bool _isLoading = false;
   bool _hasError = false;
   bool _isInitialized = false;
@@ -36,6 +38,8 @@ class WorkListingViewModel extends ChangeNotifier {
   List<WorkCategory> get categories => _categories;
   WorkCategory? get selectedCategory => _selectedCategory;
 
+  bool get isSearching => _isSearching;
+  String get searchTerm => _searchTerm;
   bool get isLoading => _isLoading;
   bool get hasError => _hasError;
 
@@ -155,6 +159,23 @@ class WorkListingViewModel extends ChangeNotifier {
     }
 
     _setLoading(false);
+  }
+
+  // ---------- SEARCH ----------
+
+  void toggleSearch() {
+    _isSearching = !_isSearching;
+
+    if (!_isSearching) {
+      _searchTerm = '';
+      reset(); // volta para o estado inicial
+    }
+
+    notifyListeners();
+  }
+
+  void updateSearchTerm(String value) {
+    _searchTerm = value;
   }
 
   // ---------- HELPERS ----------
