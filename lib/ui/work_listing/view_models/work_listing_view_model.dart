@@ -7,7 +7,6 @@ import '../../../models/work_listing.dart';
 import '../../../models/work_category.dart';
 import '../../../utils/response.dart';
 
-/// ViewModel responsável pelo estado e lógica de Work Listings.
 class WorkListingViewModel extends ChangeNotifier {
   WorkListingViewModel({
     required WorkListingRepository workListingRepository,
@@ -29,8 +28,10 @@ class WorkListingViewModel extends ChangeNotifier {
   bool _isSearching = false;
   String _searchTerm = '';
   bool _isLoading = false;
-  bool _hasError = false;
   bool _isInitialized = false;
+
+  bool _hasListingError = false;
+  bool _hasCategoryError = false;
 
   // ---------- GETTERS ----------
 
@@ -41,7 +42,11 @@ class WorkListingViewModel extends ChangeNotifier {
   bool get isSearching => _isSearching;
   String get searchTerm => _searchTerm;
   bool get isLoading => _isLoading;
-  bool get hasError => _hasError;
+
+  bool get hasError => _hasListingError || _hasCategoryError;
+
+  bool get hasListingError => _hasListingError;
+  bool get hasCategoryError => _hasCategoryError;
 
   // ---------- LIFECYCLE ----------
 
@@ -56,21 +61,27 @@ class WorkListingViewModel extends ChangeNotifier {
   // ---------- LOADERS ----------
 
   Future<void> loadCategories() async {
-    _setLoading(true);
+    _isLoading = true;
+    _hasCategoryError = false;
+    notifyListeners();
 
     final response = await _workCategoryRepository.getAll();
 
     if (response is Success<List<WorkCategory>>) {
       _categories = response.value;
     } else {
-      _fail('Falha ao carregar categorias');
+      _hasCategoryError = true;
+      _log.warning('Falha ao carregar categorias');
     }
 
-    _setLoading(false);
+    _isLoading = false;
+    notifyListeners();
   }
 
   Future<void> loadAllListings() async {
-    _setLoading(true);
+    _isLoading = true;
+    _hasListingError = false;
+    notifyListeners();
 
     final response = await _workListingRepository.getAll();
 
@@ -78,16 +89,17 @@ class WorkListingViewModel extends ChangeNotifier {
       _listings = response.value;
     } else {
       _listings = [];
-      _fail('Falha ao carregar serviços');
+      _hasListingError = true;
+      _log.warning('Falha ao carregar serviços');
     }
 
-    _setLoading(false);
+    _isLoading = false;
+    notifyListeners();
   }
 
-  Future<void> laodBackHome() async {
+  Future<void> loadBackHome() async {
     _selectedCategory = null;
     await _reloadFromCache();
-    loadAllListings();
   }
 
   // ---------- SEARCH ----------
@@ -100,7 +112,9 @@ class WorkListingViewModel extends ChangeNotifier {
       return;
     }
 
-    _setLoading(true);
+    _isLoading = true;
+    _hasListingError = false;
+    notifyListeners();
 
     final response = await _workListingRepository.searchByTerm(trimmed);
 
@@ -108,10 +122,12 @@ class WorkListingViewModel extends ChangeNotifier {
       _listings = response.value;
     } else {
       _listings = [];
-      _fail('Busca falhou: "$trimmed"');
+      _hasListingError = true;
+      _log.warning('Busca falhou: "$trimmed"');
     }
 
-    _setLoading(false);
+    _isLoading = false;
+    notifyListeners();
   }
 
   // ---------- FILTER ----------
@@ -124,7 +140,9 @@ class WorkListingViewModel extends ChangeNotifier {
       return;
     }
 
-    _setLoading(true);
+    _isLoading = true;
+    _hasListingError = false;
+    notifyListeners();
 
     final response = await _workListingRepository.getByAreaAtuacao(category.id);
 
@@ -132,22 +150,25 @@ class WorkListingViewModel extends ChangeNotifier {
       _listings = response.value;
     } else {
       _listings = [];
-      _fail('Filtro falhou. CategoryId=${category.id}');
+      _hasListingError = true;
+      _log.warning('Filtro falhou. CategoryId=${category.id}');
     }
 
-    _setLoading(false);
+    _isLoading = false;
+    notifyListeners();
   }
 
   // ---------- RESET ----------
 
-  /// Volta ao estado inicial (dados em cache)
   Future<void> reset() async {
     _selectedCategory = null;
     await _reloadFromCache();
   }
 
   Future<void> _reloadFromCache() async {
-    _setLoading(true);
+    _isLoading = true;
+    _hasListingError = false;
+    notifyListeners();
 
     final response = await _workListingRepository.getAll();
 
@@ -155,20 +176,22 @@ class WorkListingViewModel extends ChangeNotifier {
       _listings = response.value;
     } else {
       _listings = [];
-      _fail('Falha ao restaurar dados do cache');
+      _hasListingError = true;
+      _log.warning('Falha ao restaurar dados do cache');
     }
 
-    _setLoading(false);
+    _isLoading = false;
+    notifyListeners();
   }
 
-  // ---------- SEARCH ----------
+  // ---------- SEARCH UI ----------
 
   void toggleSearch() {
     _isSearching = !_isSearching;
 
     if (!_isSearching) {
       _searchTerm = '';
-      reset(); // volta para o estado inicial
+      reset();
     }
 
     notifyListeners();
@@ -176,19 +199,5 @@ class WorkListingViewModel extends ChangeNotifier {
 
   void updateSearchTerm(String value) {
     _searchTerm = value;
-  }
-
-  // ---------- HELPERS ----------
-
-  void _setLoading(bool value) {
-    _isLoading = value;
-    if (value) _hasError = false;
-    notifyListeners();
-  }
-
-  void _fail(String message) {
-    _hasError = true;
-    _log.warning(message);
-    notifyListeners();
   }
 }

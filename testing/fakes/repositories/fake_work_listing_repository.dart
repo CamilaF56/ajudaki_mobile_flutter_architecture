@@ -1,0 +1,27 @@
+import 'package:ajudaki_mobile_flutter_architecture/data/repositories/work_listing_repository.dart';
+import 'package:ajudaki_mobile_flutter_architecture/models/work_listing.dart';
+import 'package:ajudaki_mobile_flutter_architecture/utils/response.dart';
+
+import '../services/fake_api_client.dart';
+
+class FakeWorkListingRepository extends WorkListingRepository {
+  FakeWorkListingRepository() : super(apiClient: FakeApiClient());
+
+  Response<List<WorkListing>>? response;
+  Response<List<WorkListing>>? filterResponse;
+
+  @override
+  Future<Response<List<WorkListing>>> getAll() async {
+    return response ?? Response.success([]);
+  }
+
+  @override
+  Future<Response<List<WorkListing>>> searchByTerm(String term) async {
+    return response ?? Response.success([]);
+  }
+
+  @override
+  Future<Response<List<WorkListing>>> getByAreaAtuacao(int categoryId) async {
+    return filterResponse ?? Response.success([]);
+  }
+}

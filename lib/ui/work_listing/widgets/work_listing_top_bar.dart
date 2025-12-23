@@ -31,7 +31,7 @@ class WorkListingTopBar extends StatelessWidget {
               overlayColor: WidgetStateProperty.all(Colors.transparent),
             ),
             onPressed: () async {
-              await viewModel.laodBackHome();
+              await viewModel.loadBackHome();
             },
           ),
 
