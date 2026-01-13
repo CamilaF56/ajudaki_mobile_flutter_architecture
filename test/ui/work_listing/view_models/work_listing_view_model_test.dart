@@ -14,9 +14,9 @@ void main() {
         ..response = Response.success([
           WorkListing(
             id: 1,
-            name: 'Trocar tomada',
+            title: 'Trocar tomada',
             description: '',
-            suggestedValue: 50,
+            estimatedPrice: 50,
           ),
         ]);
 
@@ -59,9 +59,9 @@ void main() {
         ..response = Response.success([
           WorkListing(
             id: 1,
-            name: 'Trocar tomada',
+            title: 'Trocar tomada',
             description: '',
-            suggestedValue: 50,
+            estimatedPrice: 50,
           ),
         ]);
 
@@ -106,9 +106,9 @@ void main() {
         ..response = Response.success([
           WorkListing(
             id: 2,
-            name: 'Pintar parede',
+            title: 'Pintar parede',
             description: '',
-            suggestedValue: 200,
+            estimatedPrice: 200,
           ),
         ]);
 
@@ -161,9 +161,9 @@ void main() {
         ..filterResponse = Response.success([
           WorkListing(
             id: 3,
-            name: 'Instalar chuveiro',
+            title: 'Instalar chuveiro',
             description: '',
-            suggestedValue: 120,
+            estimatedPrice: 120,
           ),
         ]);
 
@@ -232,9 +232,9 @@ void main() {
       ..response = Response.success([
         WorkListing(
           id: 10,
-          name: 'Consertar torneira',
+          title: 'Consertar torneira',
           description: '',
-          suggestedValue: 80,
+          estimatedPrice: 80,
         ),
       ]);
 

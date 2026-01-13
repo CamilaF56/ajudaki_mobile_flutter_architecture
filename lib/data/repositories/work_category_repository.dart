@@ -8,22 +8,22 @@ class WorkCategoryRepository {
 
   final ApiClient _apiClient;
 
-  List<WorkCategory>? _cachedCategories;
+  List<WorkCategory>? cache;
 
   Future<Response<List<WorkCategory>>> getAll() async {
-    if (_cachedCategories != null) {
-      return Future.value(Response.success(_cachedCategories!));
+    if (cache != null) {
+      return Future.value(Response.success(cache!));
     }
 
-    final result = await _apiClient.getWorkCategory();
+    final result = await _apiClient.getWorkCategories();
 
-    if (result is Success<List<WorkCategory>>) {
-      _cachedCategories = result.value;
-      return Response.success(result.value);
-    } else if (result is Error<List<WorkCategory>>) {
-      return Response.error(result.error);
-    } else {
-      return Response.error(Exception('Resultado inesperado'));
-    }
+    return switch (result) {
+      Success(value: final map) => () {
+        final list = map.values.toList();
+        cache = list;
+        return Response.success(list);
+      }(),
+      Error(error: final error) => Response.error(error),
+    };
   }
 }

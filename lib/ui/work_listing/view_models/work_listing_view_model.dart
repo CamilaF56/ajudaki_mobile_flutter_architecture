@@ -12,7 +12,7 @@ class WorkListingViewModel extends ChangeNotifier {
     required WorkListingRepository workListingRepository,
     required WorkCategoryRepository workCategoryRepository,
   }) : _workListingRepository = workListingRepository,
-       _workCategoryRepository = workCategoryRepository;
+      _workCategoryRepository = workCategoryRepository;
 
   final _log = Logger('WorkListingViewModel');
 
@@ -116,7 +116,7 @@ class WorkListingViewModel extends ChangeNotifier {
     _hasListingError = false;
     notifyListeners();
 
-    final response = await _workListingRepository.searchByTerm(trimmed);
+    final response = await _workListingRepository.getByTerm(trimmed);
 
     if (response is Success<List<WorkListing>>) {
       _listings = response.value;
@@ -144,7 +144,7 @@ class WorkListingViewModel extends ChangeNotifier {
     _hasListingError = false;
     notifyListeners();
 
-    final response = await _workListingRepository.getByAreaAtuacao(category.id);
+    final response = await _workListingRepository.getByCategory(category.id);
 
     if (response is Success<List<WorkListing>>) {
       _listings = response.value;

@@ -8,7 +8,7 @@ class WorkListingEntry extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final pictureUrl = listing.professional?.person?.pictureUrl;
+    final pictureUrl = listing.professional?.pictureUrl;
 
     return Card(
       elevation: 1,
@@ -49,7 +49,7 @@ class WorkListingEntry extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    listing.professional?.person?.name ?? 'Não disponível',
+                    listing.professional?.name ?? 'Não disponível',
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -87,7 +87,7 @@ class WorkListingEntry extends StatelessWidget {
 
                   const SizedBox(height: 8),
                   Text(
-                    'Valor estimado: R\$ ${listing.suggestedValue.toStringAsFixed(2)}',
+                    'Valor estimado: R\$ ${listing.estimatedPrice.toStringAsFixed(2)}',
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,

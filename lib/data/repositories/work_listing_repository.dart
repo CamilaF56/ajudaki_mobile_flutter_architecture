@@ -8,45 +8,44 @@ class WorkListingRepository {
 
   final ApiClient _apiClient;
 
-  List<WorkListing>? _cachedWorkListings;
-
-  final Map<int, List<WorkListing>> _cachedWorkListingsByArea = {};
+  List<WorkListing>? cache;
 
   Future<Response<List<WorkListing>>> getAll() async {
-    if (_cachedWorkListings != null) {
-      return Future.value(Response.success(_cachedWorkListings!));
+    if (cache != null) {
+      return Future.value(Response.success(cache!));
     }
 
     final result = await _apiClient.getWorkListings();
 
-    if (result is Success<List<WorkListing>>) {
-      _cachedWorkListings = result.value;
-      return Response.success(result.value);
-    } else if (result is Error<List<WorkListing>>) {
-      return Response.error(result.error);
-    } else {
-      return Response.error(Exception('Resultado inesperado'));
-    }
+    return switch (result) {
+      Success(value: final map) => () {
+        final list = map.values.toList();
+        cache = list;
+        return Response.success(list);
+      }(),
+      Error(error: final error) => Response.error(error),
+    };
   }
 
-  Future<Response<List<WorkListing>>> getByAreaAtuacao(int areaId) async {
-    if (_cachedWorkListingsByArea.containsKey(areaId)) {
-      return Future.value(Response.success(_cachedWorkListingsByArea[areaId]!));
-    }
+  Future<Response<List<WorkListing>>> getByCategory(int categoryId) async {
+    final result = await _apiClient.searchWorkListings(null, categoryId);
 
-    final result = await _apiClient.getWorkListingsByCategory(areaId);
-
-    if (result is Success<List<WorkListing>>) {
-      _cachedWorkListingsByArea[areaId] = result.value;
-      return Response.success(result.value);
-    } else if (result is Error<List<WorkListing>>) {
-      return Response.error(result.error);
-    } else {
-      return Response.error(Exception('Resultado inesperado'));
-    }
+    return switch (result) {
+      Success(value: final map) =>
+        Response.success(map.values.toList()),
+      Error(error: final error) =>
+        Response.error(error),
+    };
   }
 
-  Future<Response<List<WorkListing>>> searchByTerm(String term) {
-    return _apiClient.searchWorkListings(term);
+  Future<Response<List<WorkListing>>> getByTerm(String terms) async {
+    final result = await _apiClient.searchWorkListings(terms, null);
+
+    return switch (result) {
+      Success(value: final map) =>
+        Response.success(map.values.toList()),
+      Error(error: final error) =>
+        Response.error(error),
+    };
   }
 }

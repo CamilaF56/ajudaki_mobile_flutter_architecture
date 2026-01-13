@@ -27,9 +27,9 @@ void main() {
       ..response = Response.success([
         WorkListing(
           id: 1,
-          name: 'Trocar tomada',
+          title: 'Trocar tomada',
           description: '',
-          suggestedValue: 50,
+          estimatedPrice: 50,
         ),
       ]);
 

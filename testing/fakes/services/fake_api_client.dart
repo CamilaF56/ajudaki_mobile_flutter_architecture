@@ -7,54 +7,68 @@ class FakeApiClient extends ApiClient {
   FakeApiClient() : super(host: 'fake', port: 0);
 
   @override
-  Future<Response<List<WorkListing>>> getWorkListings() async {
-    return Response.success([
-      WorkListing(
+  Future<Response<Map<int, WorkListing>>> getWorkListings() async {
+    return Response.success({
+      1: WorkListing(
         id: 1,
-        name: 'Trocar tomada',
+        title: 'Trocar tomada',
         description: '',
-        suggestedValue: 50,
+        estimatedPrice: 50,
       ),
-      WorkListing(
+      2: WorkListing(
         id: 2,
-        name: 'Instalar lâmpada',
+        title: 'Instalar lâmpada',
         description: '',
-        suggestedValue: 40,
+        estimatedPrice: 40,
       ),
-    ]);
+    });
   }
 
   @override
-  Future<Response<List<WorkCategory>>> getWorkCategory() async {
-    return Response.success([
-      WorkCategory(id: 1, name: 'Elétrica'),
-      WorkCategory(id: 2, name: 'Hidráulica'),
-    ]);
-  }
-
-  @override
-  Future<Response<List<WorkListing>>> searchWorkListings(String termo) async {
-    final all = await getWorkListings();
-    if (all is Success<List<WorkListing>>) {
-      final filtered = all.value
-          .where((s) => s.name.toLowerCase().contains(termo.toLowerCase()))
-          .toList();
-      return Response.success(filtered);
-    }
-    return Response.success([]);
-  }
-
-  @override
-  Future<Response<List<WorkListing>>> getWorkListingsByCategory(
-    int categoryId,
+  Future<Response<Map<int, WorkListing>>> searchWorkListings(
+    String? terms,
+    int? workCategoryId,
   ) async {
-    final all = await getWorkListings();
-    if (all is Success<List<WorkListing>>) {
-      final filtered = all.value
-          .where((s) => categoryId == 1 ? s.id == 1 : s.id == 2)
-          .toList();
-      return Response.success(filtered);
-    }
-    return Response.success([]);
+    final result = await getWorkListings();
+    final normalized = terms?.toLowerCase();
+
+    return switch (result) {
+        Success(value: final map) => () {
+          var entries = map.entries;
+
+          if (normalized != null && normalized.isNotEmpty) {
+            entries = entries.where(
+              (e) => e.value.title.toLowerCase().contains(normalized),
+            );
+          }
+
+        if (workCategoryId != null) {
+          entries = entries.where(
+            (e) =>
+                e.value.category != null &&
+                e.value.category!.id == workCategoryId,
+          );
+        }
+
+          return Response.success(
+            Map.fromEntries(entries),
+          );
+        }(),
+        Error(error: final error) => Response.error(error),
+      };
+  }
+
+  @override
+  Future<Response<Map<int, WorkCategory>>> getWorkCategories() async {
+    return Response.success({
+      1: WorkCategory(
+        id: 1,
+        name: 'Elétrica'
+      ),
+      2: WorkCategory(
+        id: 2,
+        name: 'Hidráulica'
+      ),
+    });
   }
 }
