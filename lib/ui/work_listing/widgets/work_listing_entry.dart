@@ -63,7 +63,7 @@ class WorkListingEntry extends StatelessWidget {
                     TextSpan(
                       children: [
                         TextSpan(
-                          text: listing.workType?.workCategory?.name ?? '',
+                          text: listing.type?.workCategory?.name ?? '',
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ],
@@ -75,7 +75,7 @@ class WorkListingEntry extends StatelessWidget {
                       children: [
                         const TextSpan(text: 'Faço '),
                         TextSpan(
-                          text: listing.workType?.name.toLowerCase() ?? '',
+                          text: listing.type?.name.toLowerCase() ?? '',
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ],

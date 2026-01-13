@@ -33,42 +33,34 @@ class FakeApiClient extends ApiClient {
     final normalized = terms?.toLowerCase();
 
     return switch (result) {
-        Success(value: final map) => () {
-          var entries = map.entries;
+      Success(value: final map) => () {
+        var entries = map.entries;
 
-          if (normalized != null && normalized.isNotEmpty) {
-            entries = entries.where(
-              (e) => e.value.title.toLowerCase().contains(normalized),
-            );
-          }
+        if (normalized != null && normalized.isNotEmpty) {
+          entries = entries.where(
+            (e) => e.value.title.toLowerCase().contains(normalized),
+          );
+        }
 
         if (workCategoryId != null) {
           entries = entries.where(
             (e) =>
-                e.value.workType?.workCategory != null &&
-                e.value.workType?.workCategory!.id == workCategoryId,
+                e.value.type?.workCategory != null &&
+                e.value.type?.workCategory!.id == workCategoryId,
           );
         }
 
-          return Response.success(
-            Map.fromEntries(entries),
-          );
-        }(),
-        Error(error: final error) => Response.error(error),
-      };
+        return Response.success(Map.fromEntries(entries));
+      }(),
+      Error(error: final error) => Response.error(error),
+    };
   }
 
   @override
   Future<Response<Map<int, WorkCategory>>> getWorkCategories() async {
     return Response.success({
-      1: WorkCategory(
-        id: 1,
-        name: 'Elétrica'
-      ),
-      2: WorkCategory(
-        id: 2,
-        name: 'Hidráulica'
-      ),
+      1: WorkCategory(id: 1, name: 'Elétrica'),
+      2: WorkCategory(id: 2, name: 'Hidráulica'),
     });
   }
 }
