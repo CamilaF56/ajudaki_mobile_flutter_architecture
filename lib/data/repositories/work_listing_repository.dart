@@ -29,29 +29,25 @@ class WorkListingRepository {
 
   Future<Response<List<WorkListing>>> getByCategory(int categoryId) async {
     if (cache != null) {
-      final filtered = cache!
-          .where(
-            (workListing) => workListing.type?.workCategory?.id == categoryId,
-          )
-          .toList();
+      final filtered =
+          cache!.where((workListing) => workListing.workType?.workCategory?.id == categoryId).toList();
       return Future.value(Response.success(filtered));
     }
 
     final result = await _apiClient.searchWorkListings(null, categoryId);
 
     return switch (result) {
-      Success(value: final map) => Response.success(map.values.toList()),
-      Error(error: final error) => Response.error(error),
+      Success(value: final map) =>
+        Response.success(map.values.toList()),
+      Error(error: final error) =>
+        Response.error(error),
     };
   }
 
   Future<Response<List<WorkListing>>> getByTerm(String terms) async {
     if (cache != null) {
       final filtered = cache!
-          .where(
-            (workListing) =>
-                workListing.title.toLowerCase().contains(terms.toLowerCase()),
-          )
+          .where((workListing) => workListing.title.toLowerCase().contains(terms.toLowerCase()))
           .toList();
       return Future.value(Response.success(filtered));
     }
@@ -59,8 +55,10 @@ class WorkListingRepository {
     final result = await _apiClient.searchWorkListings(terms, null);
 
     return switch (result) {
-      Success(value: final map) => Response.success(map.values.toList()),
-      Error(error: final error) => Response.error(error),
+      Success(value: final map) =>
+        Response.success(map.values.toList()),
+      Error(error: final error) =>
+        Response.error(error),
     };
   }
 }
