@@ -18,12 +18,12 @@ class Person extends Model {
 
   factory Person.fromJson(Map<String, dynamic> json) {
     return Person(
-      id: json['id'],
-      name: json['name'],
-      cpf: json['cpf'],
-      phoneNumber: json['phoneNumber'],
-      cep: json['cep'],
-      pictureUrl: json['pictureUrl'],
+      id: json['Id'],
+      name: json['Name'],
+      cpf: json['Cpf'],
+      phoneNumber: json['PhoneNumber'],
+      cep: json['Cep'],
+      pictureUrl: json['PictureUrl'],
     );
   }
 }

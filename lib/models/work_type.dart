@@ -13,9 +13,9 @@ class WorkType extends Model {
 
   factory WorkType.fromJson(Map<String, dynamic> json) {
     return WorkType(
-      id: json['id'],
-      name: json['nome'],
-      workCategory: WorkCategory.fromJson(json['workCategoryId'] as Map<String, dynamic>),
+      id: json['Id'],
+      name: json['Name'],
+      workCategory: WorkCategory.fromJson(json['WorkCategory'])
     );
   }
 }

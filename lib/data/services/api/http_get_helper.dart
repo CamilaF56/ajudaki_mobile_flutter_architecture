@@ -20,11 +20,10 @@ class HttpGetHelper {
       }
 
       final jsonMap = jsonDecode(response.body) as Map<String, dynamic>;
-
       final items = <int, T>{};
 
       for (final entry in jsonMap.entries) {
-        final id = int.parse(entry.key); // 🔑 key conversion happens here
+        final id = int.parse(entry.key);
         final value = fromJson(entry.value as Map<String, dynamic>);
         items[id] = value;
       }

@@ -10,8 +10,8 @@ class WorkCategory extends Model {
 
   factory WorkCategory.fromJson(Map<String, dynamic> json) {
     return WorkCategory(
-      id: json['id'],
-      name: json['name']
+      id: json['Id'],
+      name: json['Name']
     );
   }
 }
