@@ -45,8 +45,8 @@ class FakeApiClient extends ApiClient {
         if (workCategoryId != null) {
           entries = entries.where(
             (e) =>
-                e.value.category != null &&
-                e.value.category!.id == workCategoryId,
+                e.value.type?.workCategory != null &&
+                e.value.type?.workCategory!.id == workCategoryId,
           );
         }
 

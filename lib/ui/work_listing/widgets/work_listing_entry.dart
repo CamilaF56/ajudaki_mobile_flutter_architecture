@@ -63,7 +63,7 @@ class WorkListingEntry extends StatelessWidget {
                     TextSpan(
                       children: [
                         TextSpan(
-                          text: listing.category?.name ?? '',
+                          text: listing.type?.workCategory?.name ?? '',
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ],
