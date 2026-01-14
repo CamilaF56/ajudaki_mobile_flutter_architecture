@@ -11,75 +11,92 @@ class WorkListingTopBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<WorkListingViewModel>();
+    final statusBarHeight = MediaQuery.of(context).padding.top;
 
     return Container(
-      height: 64,
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      height: 64 + statusBarHeight,
+      padding: EdgeInsets.fromLTRB(16, statusBarHeight, 16, 0),
       color: const Color.fromRGBO(235, 236, 237, 1),
       child: Row(
         children: [
           // HOME
-          IconButton(
-            iconSize: 32,
-            icon: const Icon(Icons.house_rounded),
-            style: ButtonStyle(
-              iconColor: WidgetStateProperty.resolveWith<Color>(
-                (states) => states.contains(WidgetState.hovered)
-                    ? Colors.blue
-                    : const Color.fromARGB(255, 171, 186, 255),
+          SizedBox(
+            width: 48,
+            height: 48,
+            child: IconButton(
+              style: ButtonStyle(
+                iconColor: WidgetStateProperty.resolveWith<Color>(
+                  (states) => states.contains(WidgetState.hovered)
+                      ? Colors.blue
+                      : const Color.fromARGB(255, 171, 186, 255),
+                ),
+                overlayColor: WidgetStateProperty.all(Colors.transparent),
               ),
-              overlayColor: WidgetStateProperty.all(Colors.transparent),
+              icon: const Icon(Icons.house_rounded, size: 28),
+              padding: EdgeInsets.zero,
+              constraints: const BoxConstraints(),
+              onPressed: () async {
+                FocusManager.instance.primaryFocus?.unfocus();
+
+                if (viewModel.isSearching) {
+                  viewModel.toggleSearch();
+                }
+
+                await viewModel.loadBackHome();
+              },
             ),
-            onPressed: () async {
-              await viewModel.loadBackHome();
-            },
           ),
 
-          const Spacer(),
+          const SizedBox(width: 12),
 
-          // SEARCH INPUT (condicional)
+          // SEARCH INPUT
           if (viewModel.isSearching)
-            SizedBox(
-              width: 580,
+            Expanded(
               child: TextField(
                 autofocus: true,
                 decoration: const InputDecoration(
                   hintText: 'Buscar serviço...',
                   isDense: true,
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color.fromRGBO(171, 186, 255, 1),
-                      width: 1.5,
-                    ),
-                  ),
                 ),
                 onChanged: viewModel.updateSearchTerm,
                 onSubmitted: (value) => viewModel.search(value),
               ),
-            ),
-
-          // LOGO
-          if (!viewModel.isSearching)
-            SizedBox(
-              height: 32,
-              child: Image.asset('lib/assets/logo.png', fit: BoxFit.contain),
-            ),
-
-          const Spacer(),
-
-          // SEARCH BUTTON
-          IconButton(
-            iconSize: 32,
-            icon: Icon(viewModel.isSearching ? Icons.close : Icons.search),
-            style: ButtonStyle(
-              overlayColor: WidgetStateProperty.all(Colors.transparent),
-              iconColor: WidgetStateProperty.resolveWith<Color>(
-                (states) => states.contains(WidgetState.hovered)
-                    ? Colors.blue
-                    : const Color.fromARGB(255, 171, 186, 255),
+            )
+          else
+            Expanded(
+              child: Center(
+                child: SizedBox(
+                  height: 32,
+                  child: Image.asset('lib/assets/logo.png'),
+                ),
               ),
             ),
-            onPressed: viewModel.toggleSearch,
+
+          const SizedBox(width: 12),
+
+          SizedBox(
+            width: 48,
+            height: 48,
+            child: IconButton(
+              style: ButtonStyle(
+                iconColor: WidgetStateProperty.resolveWith<Color>(
+                  (states) => states.contains(WidgetState.hovered)
+                      ? Colors.blue
+                      : const Color.fromARGB(255, 171, 186, 255),
+                ),
+                overlayColor: WidgetStateProperty.all(Colors.transparent),
+              ),
+              icon: Icon(
+                viewModel.isSearching ? Icons.close : Icons.search,
+                size: 28,
+              ),
+              padding: EdgeInsets.zero,
+              constraints: const BoxConstraints(),
+              onPressed: () {
+                FocusManager.instance.primaryFocus?.unfocus();
+                viewModel.toggleSearch();
+              },
+            ),
           ),
         ],
       ),
