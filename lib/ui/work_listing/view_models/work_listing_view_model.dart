@@ -1,11 +1,11 @@
-import 'package:flutter/foundation.dart';
-import 'package:logging/logging.dart';
+import "package:flutter/foundation.dart";
+import "package:logging/logging.dart";
 
-import '../../../data/repositories/work_listing_repository.dart';
-import '../../../data/repositories/work_category_repository.dart';
-import '../../../models/work_listing.dart';
-import '../../../models/work_category.dart';
-import '../../../utils/response.dart';
+import "../../../data/repositories/work_listing_repository.dart";
+import "../../../data/repositories/work_category_repository.dart";
+import "../../../models/work_listing.dart";
+import "../../../models/work_category.dart";
+import "../../../utils/response.dart";
 
 class WorkListingViewModel extends ChangeNotifier {
   WorkListingViewModel({

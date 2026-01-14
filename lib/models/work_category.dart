@@ -1,4 +1,4 @@
-import 'model.dart';
+import "model.dart";
 
 class WorkCategory extends Model {
   final String name;

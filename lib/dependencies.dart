@@ -1,10 +1,10 @@
-import 'package:provider/provider.dart';
-import 'package:provider/single_child_widget.dart';
+import "package:provider/provider.dart";
+import "package:provider/single_child_widget.dart";
 
-import 'data/repositories/work_category_repository.dart';
-import 'data/repositories/work_listing_repository.dart';
-import 'data/services/api/api_client.dart';
-import '../../ui/work_listing/view_models/work_listing_view_model.dart';
+import "data/repositories/work_category_repository.dart";
+import "data/repositories/work_listing_repository.dart";
+import "data/services/api/api_client.dart";
+import "../../ui/work_listing/view_models/work_listing_view_model.dart";
 
 /// Providers para o app (remoto)
 List<SingleChildWidget> get providersRemote {

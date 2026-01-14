@@ -1,5 +1,5 @@
-import 'model.dart';
-import 'work_category.dart';
+import "model.dart";
+import "work_category.dart";
 
 class WorkType extends Model {
   final String name;

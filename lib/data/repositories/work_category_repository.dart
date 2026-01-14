@@ -1,6 +1,6 @@
-import '../../models/work_category.dart';
-import '../../utils/response.dart';
-import '../services/api/api_client.dart';
+import "../../models/work_category.dart";
+import "../../utils/response.dart";
+import "../services/api/api_client.dart";
 
 class WorkCategoryRepository {
   WorkCategoryRepository({required ApiClient apiClient})

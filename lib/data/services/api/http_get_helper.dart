@@ -1,6 +1,6 @@
-import 'dart:convert';
+import "dart:convert";
 import 'package:http/http.dart' as http;
-import '../../../utils/response.dart';
+import "../../../utils/response.dart";
 
 class HttpGetHelper {
   Future<Response<Map<int, T>>> getMap<T>(

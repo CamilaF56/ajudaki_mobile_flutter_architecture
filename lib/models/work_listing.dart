@@ -1,6 +1,6 @@
-import 'model.dart';
-import 'work_type.dart';
-import 'professional.dart';
+import "model.dart";
+import "work_type.dart";
+import "professional.dart";
 
 class WorkListing extends Model {
   final String title;
