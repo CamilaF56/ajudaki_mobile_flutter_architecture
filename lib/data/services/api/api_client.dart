@@ -1,9 +1,9 @@
-import "../../../models/work_listing.dart";
-import "../../../models/work_category.dart";
-import "../../../models/work_type.dart";
-import "../../../models/professional.dart";
-import "../../../utils/response.dart";
-import "http_get_helper.dart";
+import '../../../models/work_listing.dart';
+import '../../../models/work_category.dart';
+import '../../../models/work_type.dart';
+import '../../../models/professional.dart';
+import '../../../utils/response.dart';
+import 'http_get_helper.dart';
 
 class ApiClient {
   ApiClient({String? host, int? port})

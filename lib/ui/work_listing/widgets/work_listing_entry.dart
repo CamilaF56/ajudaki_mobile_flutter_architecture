@@ -1,5 +1,5 @@
-import "package:flutter/material.dart";
-import "../../../models/work_listing.dart";
+import 'package:flutter/material.dart';
+import '../../../models/work_listing.dart';
 
 class WorkListingEntry extends StatelessWidget {
   final WorkListing listing;

@@ -1,6 +1,6 @@
-import "package:flutter/material.dart";
+import 'package:flutter/material.dart';
 
-import "../../../models/work_category.dart";
+import '../../../models/work_category.dart';
 
 class WorkListingFilters extends StatelessWidget {
   final List<WorkCategory> categories;

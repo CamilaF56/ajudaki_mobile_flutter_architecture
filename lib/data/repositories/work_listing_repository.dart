@@ -1,6 +1,6 @@
-import "../../models/work_listing.dart";
-import "../../utils/response.dart";
-import "../services/api/api_client.dart";
+import '../../models/work_listing.dart';
+import '../../utils/response.dart';
+import '../services/api/api_client.dart';
 
 class WorkListingRepository {
   WorkListingRepository({required ApiClient apiClient})

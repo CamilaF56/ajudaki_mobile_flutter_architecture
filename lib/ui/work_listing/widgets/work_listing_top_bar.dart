@@ -1,6 +1,6 @@
-import "../../work_listing/view_models/work_listing_view_model.dart";
-import "package:flutter/material.dart";
-import "package:provider/provider.dart";
+import '../../work_listing/view_models/work_listing_view_model.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class WorkListingTopBar extends StatelessWidget {
   final VoidCallback? onMenuTap;
