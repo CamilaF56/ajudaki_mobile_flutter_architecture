@@ -1,4 +1,4 @@
-import 'package:ajudaki_mobile_flutter_architecture/ui/work_listing/view_models/work_listing_view_model.dart';
+import '../../work_listing/view_models/work_listing_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
