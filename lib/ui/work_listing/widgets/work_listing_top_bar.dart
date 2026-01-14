@@ -1,15 +1,16 @@
-import '../../work_listing/view_models/work_listing_view_model.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../work_listing/view_models/work_listing_view_model.dart';
 
 class WorkListingTopBar extends StatelessWidget {
+  const WorkListingTopBar({super.key, this.onMenuTap, this.onSearchTap});
+
   final VoidCallback? onMenuTap;
   final VoidCallback? onSearchTap;
 
-  const WorkListingTopBar({super.key, this.onMenuTap, this.onSearchTap});
-
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     final viewModel = context.watch<WorkListingViewModel>();
     final statusBarHeight = MediaQuery.of(context).padding.top;
 
@@ -19,14 +20,13 @@ class WorkListingTopBar extends StatelessWidget {
       color: const Color.fromRGBO(235, 236, 237, 1),
       child: Row(
         children: [
-          // HOME
           SizedBox(
             width: 48,
             height: 48,
             child: IconButton(
               style: ButtonStyle(
                 iconColor: WidgetStateProperty.resolveWith<Color>(
-                  (states) => states.contains(WidgetState.hovered)
+                  (final states) => states.contains(WidgetState.hovered)
                       ? Colors.blue
                       : const Color.fromARGB(255, 171, 186, 255),
                 ),
@@ -39,7 +39,7 @@ class WorkListingTopBar extends StatelessWidget {
                 FocusManager.instance.primaryFocus?.unfocus();
 
                 if (viewModel.isSearching) {
-                  viewModel.toggleSearch();
+                  await viewModel.toggleSearch();
                 }
 
                 await viewModel.loadBackHome();
@@ -49,7 +49,6 @@ class WorkListingTopBar extends StatelessWidget {
 
           const SizedBox(width: 12),
 
-          // SEARCH INPUT
           if (viewModel.isSearching)
             Expanded(
               child: TextField(
@@ -58,8 +57,8 @@ class WorkListingTopBar extends StatelessWidget {
                   hintText: 'Buscar serviço...',
                   isDense: true,
                 ),
-                onChanged: viewModel.updateSearchTerm,
-                onSubmitted: (value) => viewModel.search(value),
+                onChanged: (final value) => viewModel.searchTerm = value,
+                onSubmitted: viewModel.search,
               ),
             )
           else
@@ -80,7 +79,7 @@ class WorkListingTopBar extends StatelessWidget {
             child: IconButton(
               style: ButtonStyle(
                 iconColor: WidgetStateProperty.resolveWith<Color>(
-                  (states) => states.contains(WidgetState.hovered)
+                  (final states) => states.contains(WidgetState.hovered)
                       ? Colors.blue
                       : const Color.fromARGB(255, 171, 186, 255),
                 ),
@@ -92,14 +91,22 @@ class WorkListingTopBar extends StatelessWidget {
               ),
               padding: EdgeInsets.zero,
               constraints: const BoxConstraints(),
-              onPressed: () {
+              onPressed: () async {
                 FocusManager.instance.primaryFocus?.unfocus();
-                viewModel.toggleSearch();
+                await viewModel.toggleSearch();
               },
             ),
           ),
         ],
       ),
     );
+  }
+
+    @override
+  void debugFillProperties(final DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+    ..add(ObjectFlagProperty<VoidCallback?>.has('onMenuTap', onMenuTap))
+    ..add(ObjectFlagProperty<VoidCallback?>.has('onSearchTap', onSearchTap));
   }
 }

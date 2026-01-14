@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../view_models/work_listing_view_model.dart';
 import 'work_listing_entry.dart';
 import 'work_listing_filters.dart';
@@ -24,7 +23,7 @@ class _WorkListingScreenState extends State<WorkListingScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     final vm = context.watch<WorkListingViewModel>();
 
     return Scaffold(
@@ -48,7 +47,7 @@ class _WorkListingScreenState extends State<WorkListingScreen> {
     );
   }
 
-  Widget _buildBody(WorkListingViewModel vm) {
+  Widget _buildBody(final WorkListingViewModel vm) {
     if (vm.isLoading) {
       return const Center(child: CircularProgressIndicator());
     }
@@ -63,7 +62,7 @@ class _WorkListingScreenState extends State<WorkListingScreen> {
 
     return ListView.builder(
       itemCount: vm.listings.length,
-      itemBuilder: (context, index) {
+      itemBuilder: (final context, final index) {
         final listing = vm.listings[index];
 
         return WorkListingEntry(listing: listing);

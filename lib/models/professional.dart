@@ -1,7 +1,6 @@
 import 'person.dart';
 
 class Professional extends Person {
-
   Professional({
     required super.id,
     required super.name,
@@ -11,8 +10,8 @@ class Professional extends Person {
     required super.pictureUrl
   });
 
-  factory Professional.fromJson(Map<String, dynamic> json) {
-    Person person = Person.fromJson(json);
+  factory Professional.fromJson(final Map<String, dynamic> json) {
+    final person = Person.fromJson(json);
 
     return Professional(
       id: person.id,

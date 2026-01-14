@@ -1,15 +1,9 @@
 import 'model.dart';
-import 'work_type.dart';
 import 'professional.dart';
+import 'work_type.dart';
 
 class WorkListing extends Model {
-  final String title;
-  final String description;
-  final int estimatedPrice;
-  final WorkType? workType;
-  final Professional? professional;
-
-  WorkListing({
+    WorkListing({
     required super.id,
     required this.title,
     required this.description,
@@ -18,7 +12,7 @@ class WorkListing extends Model {
     this.professional,
   });
 
-  factory WorkListing.fromJson(Map<String, dynamic> json) {
+  factory WorkListing.fromJson(final Map<String, dynamic> json) {
     return WorkListing(
       id: json['Id'],
       title: json['Title'],
@@ -28,4 +22,10 @@ class WorkListing extends Model {
       professional: Professional.fromJson(json['Professional'])
     );
   }
+
+  final String title;
+  final String description;
+  final int estimatedPrice;
+  final WorkType? workType;
+  final Professional? professional;
 }

@@ -1,13 +1,16 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../../../models/work_listing.dart';
 
 class WorkListingEntry extends StatelessWidget {
+  const WorkListingEntry({
+    required this.listing,
+    super.key});
+  
   final WorkListing listing;
 
-  const WorkListingEntry({super.key, required this.listing});
-
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     final pictureUrl = listing.professional?.pictureUrl;
 
     return Card(
@@ -30,8 +33,10 @@ class WorkListingEntry extends StatelessWidget {
                         width: 84,
                         height: 84,
                         fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) {
-                          // fallback: ícone padrão
+                        errorBuilder: (
+                          final context,
+                          final error,
+                          final stackTrace) {
                           return const Icon(
                             Icons.person,
                             size: 48,
@@ -101,5 +106,11 @@ class WorkListingEntry extends StatelessWidget {
         ),
       ),
     );
+  }
+
+    @override
+  void debugFillProperties(final DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty<WorkListing>('listing', listing));
   }
 }

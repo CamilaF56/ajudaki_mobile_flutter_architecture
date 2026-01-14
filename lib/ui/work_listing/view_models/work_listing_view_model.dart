@@ -1,16 +1,15 @@
 import 'package:flutter/foundation.dart';
 import 'package:logging/logging.dart';
-
-import '../../../data/repositories/work_listing_repository.dart';
 import '../../../data/repositories/work_category_repository.dart';
-import '../../../models/work_listing.dart';
+import '../../../data/repositories/work_listing_repository.dart';
 import '../../../models/work_category.dart';
+import '../../../models/work_listing.dart';
 import '../../../utils/response.dart';
 
 class WorkListingViewModel extends ChangeNotifier {
   WorkListingViewModel({
-    required WorkListingRepository workListingRepository,
-    required WorkCategoryRepository workCategoryRepository,
+    required final WorkListingRepository workListingRepository,
+    required final WorkCategoryRepository workCategoryRepository,
   }) : _workListingRepository = workListingRepository,
       _workCategoryRepository = workCategoryRepository;
 
@@ -51,7 +50,10 @@ class WorkListingViewModel extends ChangeNotifier {
   // ---------- LIFECYCLE ----------
 
   Future<void> init() async {
-    if (_isInitialized) return;
+    if (_isInitialized) {
+      return;
+    }
+
     _isInitialized = true;
 
     await loadCategories();
@@ -99,16 +101,16 @@ class WorkListingViewModel extends ChangeNotifier {
 
   Future<void> loadBackHome() async {
     _selectedCategory = null;
-    await _reloadFromCache();
+    await reload();
   }
 
   // ---------- SEARCH ----------
 
-  Future<void> search(String term) async {
+  Future<void> search(final String term) async {
     final trimmed = term.trim();
 
     if (trimmed.isEmpty) {
-      await _reloadFromCache();
+      await reload();
       return;
     }
 
@@ -132,11 +134,11 @@ class WorkListingViewModel extends ChangeNotifier {
 
   // ---------- FILTER ----------
 
-  Future<void> filterByCategory(WorkCategory? category) async {
+  Future<void> filterByCategory(final WorkCategory? category) async {
     _selectedCategory = category;
 
     if (category == null) {
-      await _reloadFromCache();
+      await reload();
       return;
     }
 
@@ -162,10 +164,10 @@ class WorkListingViewModel extends ChangeNotifier {
 
   Future<void> reset() async {
     _selectedCategory = null;
-    await _reloadFromCache();
+    await reload();
   }
 
-  Future<void> _reloadFromCache() async {
+  Future<void> reload() async {
     _isLoading = true;
     _hasListingError = false;
     notifyListeners();
@@ -177,7 +179,7 @@ class WorkListingViewModel extends ChangeNotifier {
     } else {
       _listings = [];
       _hasListingError = true;
-      _log.warning('Falha ao restaurar dados do cache');
+      _log.warning('Falha ao restaurar dados');
     }
 
     _isLoading = false;
@@ -186,18 +188,18 @@ class WorkListingViewModel extends ChangeNotifier {
 
   // ---------- SEARCH UI ----------
 
-  void toggleSearch() {
+  Future<void> toggleSearch() async {
     _isSearching = !_isSearching;
 
     if (!_isSearching) {
       _searchTerm = '';
-      reset();
+      await reset();
     }
 
     notifyListeners();
   }
 
-  void updateSearchTerm(String value) {
+  set searchTerm(final String value) {
     _searchTerm = value;
   }
 }

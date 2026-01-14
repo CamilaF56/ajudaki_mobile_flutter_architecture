@@ -3,11 +3,9 @@ import '../../utils/response.dart';
 import '../services/api/api_client.dart';
 
 class WorkListingRepository {
-  WorkListingRepository({required ApiClient apiClient})
-    : _apiClient = apiClient;
-
+  WorkListingRepository(this._apiClient);
+  
   final ApiClient _apiClient;
-
   List<WorkListing>? cache;
 
   Future<Response<List<WorkListing>>> getAll() async {
@@ -27,10 +25,12 @@ class WorkListingRepository {
     };
   }
 
-  Future<Response<List<WorkListing>>> getByCategory(int categoryId) async {
+  Future<Response<List<WorkListing>>> getByCategory(
+    final int categoryId) async {
     if (cache != null) {
-      final filtered =
-          cache!.where((workListing) => workListing.workType?.workCategory?.id == categoryId).toList();
+      final filtered = cache!.where((final workListing) =>
+            workListing.workType?.workCategory?.id == categoryId).toList();
+
       return Future.value(Response.success(filtered));
     }
 
@@ -44,11 +44,13 @@ class WorkListingRepository {
     };
   }
 
-  Future<Response<List<WorkListing>>> getByTerm(String terms) async {
+  Future<Response<List<WorkListing>>> getByTerm(final String terms) async {
     if (cache != null) {
       final filtered = cache!
-          .where((workListing) => workListing.title.toLowerCase().contains(terms.toLowerCase()))
+          .where((final workListing) =>
+            workListing.title.toLowerCase().contains(terms.toLowerCase()))
           .toList();
+
       return Future.value(Response.success(filtered));
     }
 

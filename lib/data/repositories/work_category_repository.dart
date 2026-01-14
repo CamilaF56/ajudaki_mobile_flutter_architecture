@@ -3,11 +3,9 @@ import '../../utils/response.dart';
 import '../services/api/api_client.dart';
 
 class WorkCategoryRepository {
-  WorkCategoryRepository({required ApiClient apiClient})
-    : _apiClient = apiClient;
+  WorkCategoryRepository(this._apiClient);
 
   final ApiClient _apiClient;
-
   List<WorkCategory>? cache;
 
   Future<Response<List<WorkCategory>>> getAll() async {

@@ -3,7 +3,6 @@ import 'package:ajudaki_mobile_flutter_architecture/models/work_listing.dart';
 import 'package:ajudaki_mobile_flutter_architecture/ui/work_listing/view_models/work_listing_view_model.dart';
 import 'package:ajudaki_mobile_flutter_architecture/utils/response.dart';
 import 'package:flutter_test/flutter_test.dart';
-
 import '../../../../testing/fakes/repositories/fake_work_category_repository.dart';
 import '../../../../testing/fakes/repositories/fake_work_listing_repository.dart';
 
@@ -82,10 +81,10 @@ void main() {
 
     test('aceita listas vazias sem erro', () async {
       final listingRepo = FakeWorkListingRepository()
-        ..response = Response.success([]);
+        ..response = const Response.success([]);
 
       final categoryRepo = FakeWorkCategoryRepository()
-        ..response = Response.success([]);
+        ..response = const Response.success([]);
 
       final viewModel = WorkListingViewModel(
         workListingRepository: listingRepo,
@@ -125,7 +124,7 @@ void main() {
 
     test('busca vazia restaura dados', () async {
       final listingRepo = FakeWorkListingRepository()
-        ..response = Response.success([]);
+        ..response = const Response.success([]);
 
       final viewModel = WorkListingViewModel(
         workListingRepository: listingRepo,
@@ -200,7 +199,7 @@ void main() {
   group('reset & toggleSearch', () {
     test('reset limpa categoria selecionada', () async {
       final listingRepo = FakeWorkListingRepository()
-        ..response = Response.success([]);
+        ..response = const Response.success([]);
 
       final viewModel = WorkListingViewModel(
         workListingRepository: listingRepo,
@@ -212,16 +211,16 @@ void main() {
       expect(viewModel.selectedCategory, null);
     });
 
-    test('toggleSearch ativa e desativa busca', () {
+    test('toggleSearch ativa e desativa busca', () async {
       final viewModel = WorkListingViewModel(
         workListingRepository: FakeWorkListingRepository(),
         workCategoryRepository: FakeWorkCategoryRepository(),
       );
 
-      viewModel.toggleSearch();
+      await viewModel.toggleSearch();
       expect(viewModel.isSearching, true);
 
-      viewModel.toggleSearch();
+      await viewModel.toggleSearch();
       expect(viewModel.isSearching, false);
       expect(viewModel.searchTerm, '');
     });

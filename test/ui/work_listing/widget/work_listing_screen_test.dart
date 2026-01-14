@@ -1,19 +1,17 @@
-import 'package:ajudaki_mobile_flutter_architecture/ui/work_listing/widgets/work_listing_entry.dart';
-import 'package:ajudaki_mobile_flutter_architecture/ui/work_listing/widgets/work_listing_screen.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:provider/provider.dart';
-
 import 'package:ajudaki_mobile_flutter_architecture/models/work_category.dart';
 import 'package:ajudaki_mobile_flutter_architecture/models/work_listing.dart';
 import 'package:ajudaki_mobile_flutter_architecture/ui/work_listing/view_models/work_listing_view_model.dart';
+import 'package:ajudaki_mobile_flutter_architecture/ui/work_listing/widgets/work_listing_entry.dart';
+import 'package:ajudaki_mobile_flutter_architecture/ui/work_listing/widgets/work_listing_screen.dart';
 import 'package:ajudaki_mobile_flutter_architecture/utils/response.dart';
-
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:provider/provider.dart';
 import '../../../../testing/fakes/repositories/fake_work_category_repository.dart';
 import '../../../../testing/fakes/repositories/fake_work_listing_repository.dart';
 
 void main() {
-  Widget makeTestableWidget(WorkListingViewModel vm) {
+  Widget makeTestableWidget(final WorkListingViewModel vm) {
     return MaterialApp(
       home: ChangeNotifierProvider.value(
         value: vm,
@@ -22,7 +20,7 @@ void main() {
     );
   }
 
-  testWidgets('mostra lista de serviços quando sucesso', (tester) async {
+  testWidgets('mostra lista de serviços quando sucesso', (final tester) async {
     final listingRepo = FakeWorkListingRepository()
       ..response = Response.success([
         WorkListing(
@@ -49,12 +47,12 @@ void main() {
     expect(find.byType(WorkListingEntry), findsOneWidget);
   });
 
-  testWidgets('mostra mensagem de erro quando falha', (tester) async {
+  testWidgets('mostra mensagem de erro quando falha', (final tester) async {
     final listingRepo = FakeWorkListingRepository()
       ..response = Response.error(Exception('erro'));
 
     final categoryRepo = FakeWorkCategoryRepository()
-      ..response = Response.success([]);
+      ..response = const Response.success([]);
 
     final vm = WorkListingViewModel(
       workListingRepository: listingRepo,
@@ -68,12 +66,12 @@ void main() {
     expect(find.text('Erro ao carregar os serviços'), findsOneWidget);
   });
 
-  testWidgets('mostra estado vazio quando não há serviços', (tester) async {
+  testWidgets('mostra estado vazio quando não há serviços', (final tester) async {
     final listingRepo = FakeWorkListingRepository()
-      ..response = Response.success([]);
+      ..response = const Response.success([]);
 
     final categoryRepo = FakeWorkCategoryRepository()
-      ..response = Response.success([]);
+      ..response = const Response.success([]);
 
     final vm = WorkListingViewModel(
       workListingRepository: listingRepo,

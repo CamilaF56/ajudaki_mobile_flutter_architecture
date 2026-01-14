@@ -1,9 +1,9 @@
 sealed class Response<T> {
   const Response();
 
-  const factory Response.success(T value) = Success._;
+  const factory Response.success(final T value) = Success._;
 
-  const factory Response.error(Exception error) = Error._;
+  const factory Response.error(final Exception error) = Error._;
 }
 
 final class Success<T> extends Response<T> {

@@ -1,13 +1,7 @@
 import 'model.dart';
 
 class Person extends Model {
-  final String name;
-  final String cpf;
-  final String phoneNumber;
-  final String cep;
-  final String pictureUrl;
-
-  Person({
+    Person({
     required super.id,
     required this.name,
     required this.cpf,
@@ -16,7 +10,7 @@ class Person extends Model {
     required this.pictureUrl
   });
 
-  factory Person.fromJson(Map<String, dynamic> json) {
+  factory Person.fromJson(final Map<String, dynamic> json) {
     return Person(
       id: json['Id'],
       name: json['Name'],
@@ -26,4 +20,10 @@ class Person extends Model {
       pictureUrl: json['PictureUrl'],
     );
   }
+
+  final String name;
+  final String cpf;
+  final String phoneNumber;
+  final String cep;
+  final String pictureUrl;
 }

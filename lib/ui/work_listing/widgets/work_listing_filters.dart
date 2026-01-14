@@ -1,21 +1,21 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
 import '../../../models/work_category.dart';
 
 class WorkListingFilters extends StatelessWidget {
+    const WorkListingFilters({
+    required this.categories,
+    required this.selectedCategory,
+    required this.onCategoryChanged,
+    super.key
+  });
+  
   final List<WorkCategory> categories;
   final WorkCategory? selectedCategory;
   final ValueChanged<WorkCategory?> onCategoryChanged;
 
-  const WorkListingFilters({
-    super.key,
-    required this.categories,
-    required this.selectedCategory,
-    required this.onCategoryChanged,
-  });
-
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Row(
@@ -26,7 +26,7 @@ class WorkListingFilters extends StatelessWidget {
               hint: const Text('Selecione a categoria do serviço'),
               items: categories
                   .map(
-                    (category) => DropdownMenuItem(
+                    (final category) => DropdownMenuItem(
                       value: category,
                       child: Text(category.name),
                     ),
@@ -45,5 +45,14 @@ class WorkListingFilters extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  @override
+  void debugFillProperties(final DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+    ..add(DiagnosticsProperty<List<WorkCategory>>('categories', categories))
+    ..add(DiagnosticsProperty<WorkCategory>('selectedCategory', selectedCategory))
+    ..add(ObjectFlagProperty<ValueChanged<WorkCategory>?>.has('onCategoryChanged', onCategoryChanged));
   }
 }
