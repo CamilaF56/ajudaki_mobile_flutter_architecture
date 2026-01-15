@@ -19,7 +19,7 @@ class HttpGetHelper {
     final int port,
     final String path,
     final T Function(Map<String, dynamic>) fromJson, {
-    final Map<String, String>? queryParameters,
+    final Map<String, String?>? queryParameters,
   }) async {
     final uri = Uri.http('$host:$port', path, queryParameters);
 
