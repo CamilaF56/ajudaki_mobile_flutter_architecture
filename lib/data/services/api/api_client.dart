@@ -34,22 +34,17 @@ class ApiClient {
     final String? terms,
     final int? workCategoryId,
   ) {
-    final queryParameters = <String, String>{};
+    final queryParameters = <String, String?>{};
 
-    if (terms != null) {
-      queryParameters['terms'] = terms;
-    }
-
-    if (workCategoryId != null) {
-      queryParameters['workCategoryId'] = workCategoryId.toString();
-    }
+    queryParameters['terms'] = terms;
+    queryParameters['workCategoryId'] = workCategoryId.toString();
 
     return _helper.getMap(
       _host,
       _port,
       '/api/worklistings/search',
       WorkListing.fromJson,
-      queryParameters: queryParameters.isEmpty ? null : queryParameters,
+      queryParameters: queryParameters,
     );
   }
 
