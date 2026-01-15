@@ -2,16 +2,21 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../../../models/work_listing.dart';
 
+/// Widget responsável por exibir um anúncio de trabalho.
+///
+/// Apresenta informações do profissional, área de atuação,
+/// tipo de serviço, descrição e valor estimado.
 class WorkListingEntry extends StatelessWidget {
-  const WorkListingEntry({
-    required this.listing,
-    super.key});
-  
+  /// Cria o widget de exibição de um anúncio de trabalho.
+  const WorkListingEntry({required this.listing, super.key});
+
+  /// Anúncio de trabalho a ser exibido.
   final WorkListing listing;
 
   @override
   Widget build(final BuildContext context) {
     final pictureUrl = listing.professional?.pictureUrl;
+    final priceEstimed = listing.estimatedPrice.toStringAsFixed(2);
 
     return Card(
       elevation: 1,
@@ -23,6 +28,7 @@ class WorkListingEntry extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            /// Avatar do profissional.
             CircleAvatar(
               radius: 42,
               backgroundColor: const Color.fromRGBO(235, 236, 237, 1),
@@ -33,26 +39,26 @@ class WorkListingEntry extends StatelessWidget {
                         width: 84,
                         height: 84,
                         fit: BoxFit.cover,
-                        errorBuilder: (
-                          final context,
-                          final error,
-                          final stackTrace) {
-                          return const Icon(
-                            Icons.person,
-                            size: 48,
-                            color: Colors.grey,
-                          );
-                        },
+                        errorBuilder:
+                            (final context, final error, final stackTrace) {
+                              return const Icon(
+                                Icons.person,
+                                size: 48,
+                                color: Colors.grey,
+                              );
+                            },
                       )
                     : const Icon(Icons.person, size: 48, color: Colors.grey),
               ),
             ),
             const SizedBox(width: 24),
 
+            /// Informações do anúncio.
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  /// Nome do profissional.
                   Text(
                     listing.professional?.name ?? 'Não disponível',
                     style: const TextStyle(
@@ -64,6 +70,8 @@ class WorkListingEntry extends StatelessWidget {
                   ),
 
                   const SizedBox(height: 4),
+
+                  /// Categoria do trabalho.
                   Text.rich(
                     TextSpan(
                       children: [
@@ -74,7 +82,10 @@ class WorkListingEntry extends StatelessWidget {
                       ],
                     ),
                   ),
+
                   const SizedBox(height: 4),
+
+                  /// Tipo de serviço prestado.
                   Text.rich(
                     TextSpan(
                       children: [
@@ -88,11 +99,16 @@ class WorkListingEntry extends StatelessWidget {
                   ),
 
                   const SizedBox(height: 8),
+
+                  /// Descrição do serviço.
                   Text(listing.description),
 
                   const SizedBox(height: 8),
+
+                  /// Valor estimado do serviço.
                   Text(
-                    'Valor estimado: R\$ ${listing.estimatedPrice.toStringAsFixed(2)}',
+                    r'Valor estimado: R$ '
+                    '$priceEstimed',
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -108,7 +124,7 @@ class WorkListingEntry extends StatelessWidget {
     );
   }
 
-    @override
+  @override
   void debugFillProperties(final DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties.add(DiagnosticsProperty<WorkListing>('listing', listing));

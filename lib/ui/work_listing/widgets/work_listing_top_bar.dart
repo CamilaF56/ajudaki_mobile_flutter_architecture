@@ -3,10 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../work_listing/view_models/work_listing_view_model.dart';
 
+/// Barra superior da tela de listagem de serviços.
+///
+/// Responsável por exibir o logotipo da aplicação ou o campo de busca,
+/// além de fornecer ações de navegação para retorno à tela inicial
+/// e ativação/desativação do modo de pesquisa.
 class WorkListingTopBar extends StatelessWidget {
+  /// Cria a barra superior da listagem de serviços.
+  ///
+  /// Os callbacks [onMenuTap] e [onSearchTap] são opcionais e permitem
+  /// customização, caso necessário.
   const WorkListingTopBar({super.key, this.onMenuTap, this.onSearchTap});
 
+  /// Callback acionado ao tocar no botão de menu (home).
   final VoidCallback? onMenuTap;
+
+  /// Callback acionado ao tocar no botão de busca.
   final VoidCallback? onSearchTap;
 
   @override
@@ -43,6 +55,7 @@ class WorkListingTopBar extends StatelessWidget {
                 }
 
                 await viewModel.loadBackHome();
+                onMenuTap?.call();
               },
             ),
           ),
@@ -94,6 +107,7 @@ class WorkListingTopBar extends StatelessWidget {
               onPressed: () async {
                 FocusManager.instance.primaryFocus?.unfocus();
                 await viewModel.toggleSearch();
+                onSearchTap?.call();
               },
             ),
           ),
@@ -102,11 +116,11 @@ class WorkListingTopBar extends StatelessWidget {
     );
   }
 
-    @override
+  @override
   void debugFillProperties(final DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-    ..add(ObjectFlagProperty<VoidCallback?>.has('onMenuTap', onMenuTap))
-    ..add(ObjectFlagProperty<VoidCallback?>.has('onSearchTap', onSearchTap));
+      ..add(ObjectFlagProperty<VoidCallback?>.has('onMenuTap', onMenuTap))
+      ..add(ObjectFlagProperty<VoidCallback?>.has('onSearchTap', onSearchTap));
   }
 }

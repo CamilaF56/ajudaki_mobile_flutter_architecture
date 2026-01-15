@@ -1,5 +1,5 @@
+/// Define as rotas utilizadas na aplicação.
 abstract final class Routes {
-  static const home = search;
-
-  static const search = '/';
+  /// Rota inicial da aplicação, para busca.
+  static const home = '/';
 }

@@ -66,7 +66,9 @@ void main() {
     expect(find.text('Erro ao carregar os serviços'), findsOneWidget);
   });
 
-  testWidgets('mostra estado vazio quando não há serviços', (final tester) async {
+  testWidgets('mostra estado vazio quando não há serviços', (
+    final tester,
+  ) async {
     final listingRepo = FakeWorkListingRepository()
       ..response = const Response.success([]);
 

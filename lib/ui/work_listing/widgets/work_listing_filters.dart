@@ -2,16 +2,26 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../../../models/work_category.dart';
 
+/// Widget responsável por exibir os filtros de área de atuação.
+///
+/// Permite ao usuário selecionar uma área de atuação
+/// para filtrar os anúncios exibidos.
 class WorkListingFilters extends StatelessWidget {
-    const WorkListingFilters({
+  /// Cria o widget de filtros de área de atuação.
+  const WorkListingFilters({
     required this.categories,
     required this.selectedCategory,
     required this.onCategoryChanged,
-    super.key
+    super.key,
   });
-  
+
+  /// Lista de áreas de atuação disponíveis para seleção.
   final List<WorkCategory> categories;
+
+  /// Área de atuação atualmente selecionada.
   final WorkCategory? selectedCategory;
+
+  /// Callback acionado quando a categoria selecionada é alterada.
   final ValueChanged<WorkCategory?> onCategoryChanged;
 
   @override
@@ -51,8 +61,15 @@ class WorkListingFilters extends StatelessWidget {
   void debugFillProperties(final DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-    ..add(DiagnosticsProperty<List<WorkCategory>>('categories', categories))
-    ..add(DiagnosticsProperty<WorkCategory>('selectedCategory', selectedCategory))
-    ..add(ObjectFlagProperty<ValueChanged<WorkCategory>?>.has('onCategoryChanged', onCategoryChanged));
+      ..add(DiagnosticsProperty<List<WorkCategory>>('categories', categories))
+      ..add(
+        DiagnosticsProperty<WorkCategory>('selectedCategory', selectedCategory),
+      )
+      ..add(
+        ObjectFlagProperty<ValueChanged<WorkCategory>?>.has(
+          'onCategoryChanged',
+          onCategoryChanged,
+        ),
+      );
   }
 }

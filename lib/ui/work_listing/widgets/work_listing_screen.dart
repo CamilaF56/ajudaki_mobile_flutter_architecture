@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../view_models/work_listing_view_model.dart';
@@ -5,7 +7,12 @@ import 'work_listing_entry.dart';
 import 'work_listing_filters.dart';
 import 'work_listing_top_bar.dart';
 
+/// Tela principal responsável por exibir a listagem de serviços.
+///
+/// Integra filtros, barra superior e lista de resultados,
+/// consumindo o estado fornecido pelo [WorkListingViewModel].
 class WorkListingScreen extends StatefulWidget {
+  /// Cria a tela de listagem de serviços.
   const WorkListingScreen({super.key});
 
   @override
@@ -17,8 +24,9 @@ class _WorkListingScreenState extends State<WorkListingScreen> {
   void initState() {
     super.initState();
 
+    /// Carrega os dados depois que a tela aparece.
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<WorkListingViewModel>().init();
+      unawaited(context.read<WorkListingViewModel>().init());
     });
   }
 
@@ -47,6 +55,10 @@ class _WorkListingScreenState extends State<WorkListingScreen> {
     );
   }
 
+  /// Constrói o corpo principal da tela de acordo com o estado atual.
+  ///
+  /// Exibe indicador de carregamento, mensagens de erro,
+  /// mensagem de lista vazia ou a lista de serviços.
   Widget _buildBody(final WorkListingViewModel vm) {
     if (vm.isLoading) {
       return const Center(child: CircularProgressIndicator());
