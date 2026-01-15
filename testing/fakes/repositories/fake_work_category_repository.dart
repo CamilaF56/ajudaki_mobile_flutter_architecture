@@ -1,6 +1,6 @@
-import '../../../lib/data/repositories/work_category_repository.dart';
-import '../../../lib/models/work_category.dart';
-import '../../../lib/utils/response.dart';
+import 'package:ajudaki_mobile_flutter_architecture/data/repositories/work_category_repository.dart';
+import 'package:ajudaki_mobile_flutter_architecture/models/work_category.dart';
+import 'package:ajudaki_mobile_flutter_architecture/utils/response.dart';
 import '../services/fake_api_client.dart';
 
 class FakeWorkCategoryRepository extends WorkCategoryRepository {

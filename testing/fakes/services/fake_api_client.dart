@@ -1,7 +1,7 @@
-import '../../../lib/data/services/api/api_client.dart';
-import '../../../lib/models/work_listing.dart';
-import '../../../lib/models/work_category.dart';
-import '../../../lib/utils/response.dart';
+import 'package:ajudaki_mobile_flutter_architecture/data/services/api/api_client.dart';
+import 'package:ajudaki_mobile_flutter_architecture/models/work_listing.dart';
+import 'package:ajudaki_mobile_flutter_architecture/models/work_category.dart';
+import 'package:ajudaki_mobile_flutter_architecture/utils/response.dart';
 
 class FakeApiClient extends ApiClient {
   FakeApiClient() : super();
