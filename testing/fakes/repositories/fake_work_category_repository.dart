@@ -6,7 +6,6 @@ import '../services/fake_api_client.dart';
 class FakeWorkCategoryRepository extends WorkCategoryRepository {
   FakeWorkCategoryRepository() : super(FakeApiClient());
 
-  /// Resposta configurável para os testes
   Response<List<WorkCategory>>? response;
 
   @override
