@@ -23,10 +23,6 @@ class ApiClient {
   Future<Response<Map<int, WorkListing>>> getWorkListings() =>
       _helper.getMap(_host, _port, '/api/worklistings', WorkListing.fromJson);
 
-  /// Retorna um anúncio de trabalho pelo identificador.
-  Future<Response<WorkListing>> getWorkListing(final int id) =>
-      _helper.get(_host, _port, '/api/worklistings/$id', WorkListing.fromJson);
-
   /// Realiza a busca de anúncios de trabalho por termo e/ou categoria.
   ///
   /// Ambos os parâmetros são opcionais e utilizados conforme informados.
@@ -51,32 +47,4 @@ class ApiClient {
   /// Retorna todas as categorias de trabalho.
   Future<Response<Map<int, WorkCategory>>> getWorkCategories() => _helper
       .getMap(_host, _port, '/api/workcategories', WorkCategory.fromJson);
-
-  /// Retorna uma categoria de trabalho pelo identificador.
-  Future<Response<WorkCategory>> getWorkCategory(final int id) => _helper.get(
-    _host,
-    _port,
-    '/api/workcategories/$id',
-    WorkCategory.fromJson,
-  );
-
-  /// Retorna todos os tipos de trabalho.
-  Future<Response<Map<int, WorkType>>> getWorkTypes() =>
-      _helper.getMap(_host, _port, '/api/worktypes', WorkType.fromJson);
-
-  /// Retorna um tipo de trabalho pelo identificador.
-  Future<Response<WorkType>> getWorkType(final int id) =>
-      _helper.get(_host, _port, '/api/worktypes/$id', WorkType.fromJson);
-
-  /// Retorna todos os profissionais cadastrados.
-  Future<Response<Map<int, Professional>>> getProfessionals() =>
-      _helper.getMap(_host, _port, '/api/professionals', Professional.fromJson);
-
-  /// Retorna um profissional pelo identificador.
-  Future<Response<Professional>> getProfessional(final int id) => _helper.get(
-    _host,
-    _port,
-    '/api/professionals/$id',
-    Professional.fromJson,
-  );
 }
