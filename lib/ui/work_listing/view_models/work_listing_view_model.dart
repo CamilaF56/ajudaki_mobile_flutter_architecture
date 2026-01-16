@@ -10,11 +10,11 @@ import '../../../utils/response.dart';
 /// Atua como intermediário entre a camada de UI e os repositórios.
 class WorkListingViewModel extends ChangeNotifier {
   /// Cria o ViewModel com os repositórios necessários.
-  WorkListingViewModel(
-    final WorkListingRepository workListingRepository,
-    final WorkCategoryRepository workCategoryRepository)
-    : _workListingRepository = workListingRepository,
-    _workCategoryRepository = workCategoryRepository;
+  WorkListingViewModel({
+    required final WorkListingRepository workListingRepository,
+    required final WorkCategoryRepository workCategoryRepository,
+  }) : _workListingRepository = workListingRepository,
+       _workCategoryRepository = workCategoryRepository;
 
   /// Repositório de anúncios de trabalho.
   final WorkListingRepository _workListingRepository;

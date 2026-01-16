@@ -26,8 +26,8 @@ List<SingleChildWidget> get providersRemote {
     /// Provider do ViewModel responsável pela listagem de trabalhos.
     ChangeNotifierProvider(
       create: (final context) => WorkListingViewModel(
-        context.read(),
-        context.read(),
+        workCategoryRepository: context.read(),
+        workListingRepository: context.read(),
       ),
     ),
   ];
