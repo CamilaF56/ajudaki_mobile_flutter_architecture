@@ -19,7 +19,7 @@ class WorkListingRepository {
     if (_cache == null) {
       final result = await _apiClient.getWorkListings();
 
-      if (result is Success<Map<int, WorkListing>>) {
+      if (result is Ok<Map<int, WorkListing>>) {
         _cache = result.value.values.toList();
       }
     }
@@ -37,7 +37,7 @@ class WorkListingRepository {
     if (_cache == null) {
       final result = await _apiClient.searchWorkListings(null, categoryId);
 
-      if (result is Success<Map<int, WorkListing>>) {
+      if (result is Ok<Map<int, WorkListing>>) {
         return Result.success(result.value.values.toList());
       }
     }
@@ -58,7 +58,7 @@ class WorkListingRepository {
     final result = await _apiClient.searchWorkListings(terms, null);
 
     List<WorkListing>? list;
-    if (result is Success<Map<int, WorkListing>>) {
+    if (result is Ok<Map<int, WorkListing>>) {
       list = result.value.values.toList();
     }
 

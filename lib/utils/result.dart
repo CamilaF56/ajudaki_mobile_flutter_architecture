@@ -7,16 +7,16 @@ sealed class Result<T> {
   const Result();
 
   /// Cria uma resultado de sucesso contendo o valor retornado.
-  const factory Result.success(final T value) = Success._;
+  const factory Result.success(final T value) = Ok._;
 
   /// Cria uma resultado de erro contendo a exceção ocorrida.
   const factory Result.error(final Exception error) = Error._;
 }
 
 /// Representa uma resultado de sucesso.
-final class Success<T> extends Result<T> {
+final class Ok<T> extends Result<T> {
   /// Cria uma resultado de sucesso com o valor informado.
-  const Success._(this.value);
+  const Ok._(this.value);
 
   /// Valor retornado pela operação.
   final T value;

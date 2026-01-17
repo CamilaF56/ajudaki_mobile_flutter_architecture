@@ -19,7 +19,7 @@ class WorkCategoryRepository {
     if (_cache == null) {
       final result = await _apiClient.getWorkCategories();
 
-      if (result is Success<Map<int, WorkCategory>>) {
+      if (result is Ok<Map<int, WorkCategory>>) {
         _cache = result.value.values.toList();
       }
     }

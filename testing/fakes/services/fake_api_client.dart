@@ -33,7 +33,7 @@ class FakeApiClient extends ApiClient {
     final normalized = terms?.toLowerCase();
 
     return switch (result) {
-        Success(value: final map) => () {
+        Ok(value: final map) => () {
           var entries = map.entries;
 
           if (normalized != null && normalized.isNotEmpty) {

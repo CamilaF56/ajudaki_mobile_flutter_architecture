@@ -106,7 +106,7 @@ class WorkListingViewModel extends ChangeNotifier {
 
     final response = await _workCategoryRepository.getAll();
 
-    if (response is Success<List<WorkCategory>>) {
+    if (response is Ok<List<WorkCategory>>) {
       _categories = response.value;
     } else {
       _hasCategoryError = true;
@@ -124,7 +124,7 @@ class WorkListingViewModel extends ChangeNotifier {
 
     final response = await _workListingRepository.getAll();
 
-    if (response is Success<List<WorkListing>>) {
+    if (response is Ok<List<WorkListing>>) {
       _listings = response.value;
     } else {
       _listings = [];
@@ -158,7 +158,7 @@ class WorkListingViewModel extends ChangeNotifier {
 
     final response = await _workListingRepository.getByTerm(trimmed);
 
-    if (response is Success<List<WorkListing>>) {
+    if (response is Ok<List<WorkListing>>) {
       _listings = response.value;
     } else {
       _listings = [];
@@ -186,7 +186,7 @@ class WorkListingViewModel extends ChangeNotifier {
 
     final response = await _workListingRepository.getByCategory(category.id);
 
-    if (response is Success<List<WorkListing>>) {
+    if (response is Ok<List<WorkListing>>) {
       _listings = response.value;
     } else {
       _listings = [];
@@ -213,7 +213,7 @@ class WorkListingViewModel extends ChangeNotifier {
 
     final response = await _workListingRepository.getAll();
 
-    if (response is Success<List<WorkListing>>) {
+    if (response is Ok<List<WorkListing>>) {
       _listings = response.value;
     } else {
       _listings = [];
