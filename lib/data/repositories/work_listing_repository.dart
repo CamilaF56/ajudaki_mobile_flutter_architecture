@@ -7,33 +7,24 @@ class WorkListingRepository {
   /// Cria o repositório com o cliente de API utilizado nas requisições.
   WorkListingRepository(this._apiClient);
 
-  /// Cliente responsável pela comunicação com a API.
   final ApiClient _apiClient;
 
-  /// Cache em memória dos anúncios já carregados.
-  ///
-  /// Evita chamadas repetidas à API.
-  List<WorkListing>? cache;
+  List<WorkListing>? _cache;
 
   /// Retorna todos os anúncios de trabalho.
   ///
   /// Caso exista cache, os dados são retornados diretamente.
   /// Caso contrário, a lista é buscada na API.
   Future<Response<List<WorkListing>>> getAll() async {
-    if (cache != null) {
-      return Future.value(Response.success(cache!));
-    }
+    if (_cache == null) {
+      final result = await _apiClient.getWorkListings();
 
-    final result = await _apiClient.getWorkListings();
-
-    return switch (result) {
-      Success(value: final map) => () {
-        final list = map.values.toList();
-        cache = list;
-        return Response.success(list);
-      }(),
-      Error(error: final error) => Response.error(error),
+      if (result is Success<Map<int, WorkListing>>) {
+          _cache = result.value.values.toList();
+        }
     };
+    
+    return Response.success(_cache!);
   }
 
   /// Retorna os anúncios filtrados por categoria.
@@ -43,46 +34,35 @@ class WorkListingRepository {
   Future<Response<List<WorkListing>>> getByCategory(
     final int categoryId,
   ) async {
-    if (cache != null) {
-      final filtered = cache!
-          .where(
-            (final workListing) =>
-                workListing.workType?.workCategory?.id == categoryId,
-          )
-          .toList();
+    if (_cache == null) {
+      final result = await _apiClient.searchWorkListings(null, categoryId);
 
-      return Future.value(Response.success(filtered));
+      if (result is Success<Map<int, WorkListing>>) {
+        return Response.success(result.value.values.toList());
+      };
     }
 
-    final result = await _apiClient.searchWorkListings(null, categoryId);
+    final filtered = _cache!
+    .where(
+      (final workListing) =>
+          workListing.workType?.workCategory?.id == categoryId,
+    )
+    .toList();
 
-    return switch (result) {
-      Success(value: final map) => Response.success(map.values.toList()),
-      Error(error: final error) => Response.error(error),
-    };
+    return Response.success(filtered);
   }
 
   /// Retorna os anúncios filtrados pelo termo de busca.
   ///
-  /// Caso exista cache, o filtro é aplicado localmente.
-  /// Caso contrário, a busca é realizada via API.
+  /// A busca é realizada via API.
   Future<Response<List<WorkListing>>> getByTerm(final String terms) async {
-    if (cache != null) {
-      final filtered = cache!
-          .where(
-            (final workListing) =>
-                workListing.title.toLowerCase().contains(terms.toLowerCase()),
-          )
-          .toList();
-
-      return Future.value(Response.success(filtered));
-    }
-
     final result = await _apiClient.searchWorkListings(terms, null);
 
-    return switch (result) {
-      Success(value: final map) => Response.success(map.values.toList()),
-      Error(error: final error) => Response.error(error),
+    List<WorkListing>? list = null;
+    if (result is Success<Map<int, WorkListing>>) {
+      list = result.value.values.toList();
     };
+
+    return Response.success(list!);
   }
 }
