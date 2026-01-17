@@ -20,9 +20,9 @@ class WorkListingRepository {
       final result = await _apiClient.getWorkListings();
 
       if (result is Success<Map<int, WorkListing>>) {
-          _cache = result.value.values.toList();
-        }
-    };
+        _cache = result.value.values.toList();
+      }
+    }
     
     return Response.success(_cache!);
   }
@@ -39,15 +39,14 @@ class WorkListingRepository {
 
       if (result is Success<Map<int, WorkListing>>) {
         return Response.success(result.value.values.toList());
-      };
+      }
     }
 
     final filtered = _cache!
     .where(
       (final workListing) =>
-          workListing.workType?.workCategory?.id == categoryId,
-    )
-    .toList();
+        workListing.workType?.workCategory?.id == categoryId,
+    ).toList();
 
     return Response.success(filtered);
   }
@@ -58,10 +57,10 @@ class WorkListingRepository {
   Future<Response<List<WorkListing>>> getByTerm(final String terms) async {
     final result = await _apiClient.searchWorkListings(terms, null);
 
-    List<WorkListing>? list = null;
+    List<WorkListing>? list;
     if (result is Success<Map<int, WorkListing>>) {
       list = result.value.values.toList();
-    };
+    }
 
     return Response.success(list!);
   }
