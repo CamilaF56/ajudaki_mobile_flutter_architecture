@@ -5,7 +5,7 @@ import '../../../utils/response.dart';
 /// Helper responsável por realizar requisições HTTP GET.
 ///
 /// Centraliza a lógica de comunicação com a API e o tratamento
-/// das respostas no formato [Response].
+/// das respostas no formato [Result].
 class HttpGetHelper {
   /// Executa uma requisição GET que retorna um mapa de objetos.
   ///
@@ -14,7 +14,7 @@ class HttpGetHelper {
   ///
   /// O parâmetro [fromJson] é responsável por converter o JSON
   /// para o tipo [T].
-  Future<Response<Map<int, T>>> getMap<T>(
+  Future<Result<Map<int, T>>> getMap<T>(
     final String host,
     final int port,
     final String path,
@@ -27,7 +27,7 @@ class HttpGetHelper {
       final response = await http.get(uri);
 
       if (response.statusCode != 200) {
-        return Response.error(Exception('Inválido: ${response.statusCode}'));
+        return Result.error(Exception('Inválido: ${response.statusCode}'));
       }
 
       final jsonMap = jsonDecode(response.body) as Map<String, dynamic>;
@@ -39,9 +39,9 @@ class HttpGetHelper {
         items[id] = value;
       }
 
-      return Response.success(items);
+      return Result.success(items);
     } on Exception catch (e) {
-      return Response.error(Exception(e.toString()));
+      return Result.error(Exception(e.toString()));
     }
   }
 
@@ -49,7 +49,7 @@ class HttpGetHelper {
   ///
   /// O parâmetro [fromJson] converte o JSON retornado
   /// para o tipo [T].
-  Future<Response<T>> get<T>(
+  Future<Result<T>> get<T>(
     final String host,
     final int port,
     final String path,
@@ -62,15 +62,15 @@ class HttpGetHelper {
       final response = await http.get(uri);
 
       if (response.statusCode != 200) {
-        return Response.error(Exception('Inválido: ${response.statusCode}'));
+        return Result.error(Exception('Inválido: ${response.statusCode}'));
       }
 
       final jsonMap = jsonDecode(response.body) as Map<String, dynamic>;
       final item = fromJson(jsonMap);
 
-      return Response.success(item);
+      return Result.success(item);
     } on Exception catch (e) {
-      return Response.error(Exception(e.toString()));
+      return Result.error(Exception(e.toString()));
     }
   }
 }

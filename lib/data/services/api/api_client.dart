@@ -18,13 +18,13 @@ class ApiClient {
   final HttpGetHelper _helper = HttpGetHelper();
 
   /// Retorna todos os anúncios de trabalho.
-  Future<Response<Map<int, WorkListing>>> getWorkListings() =>
+  Future<Result<Map<int, WorkListing>>> getWorkListings() =>
       _helper.getMap(_host, _port, '/api/worklistings', WorkListing.fromJson);
 
   /// Realiza a busca de anúncios de trabalho por termo e/ou categoria.
   ///
   /// Ambos os parâmetros são opcionais e utilizados conforme informados.
-  Future<Response<Map<int, WorkListing>>> searchWorkListings(
+  Future<Result<Map<int, WorkListing>>> searchWorkListings(
     final String? terms,
     final int? workCategoryId,
   ) {
@@ -43,6 +43,6 @@ class ApiClient {
   }
 
   /// Retorna todas as categorias de trabalho.
-  Future<Response<Map<int, WorkCategory>>> getWorkCategories() => _helper
+  Future<Result<Map<int, WorkCategory>>> getWorkCategories() => _helper
       .getMap(_host, _port, '/api/workcategories', WorkCategory.fromJson);
 }

@@ -2,20 +2,20 @@
 ///
 /// Pode ser um sucesso, contendo um valor do tipo [T],
 /// ou um erro, contendo uma exceção.
-sealed class Response<T> {
-  /// Construtor base da resposta.
-  const Response();
+sealed class Result<T> {
+  /// Construtor base da resultado.
+  const Result();
 
-  /// Cria uma resposta de sucesso contendo o valor retornado.
-  const factory Response.success(final T value) = Success._;
+  /// Cria uma resultado de sucesso contendo o valor retornado.
+  const factory Result.success(final T value) = Success._;
 
-  /// Cria uma resposta de erro contendo a exceção ocorrida.
-  const factory Response.error(final Exception error) = Error._;
+  /// Cria uma resultado de erro contendo a exceção ocorrida.
+  const factory Result.error(final Exception error) = Error._;
 }
 
-/// Representa uma resposta de sucesso.
-final class Success<T> extends Response<T> {
-  /// Cria uma resposta de sucesso com o valor informado.
+/// Representa uma resultado de sucesso.
+final class Success<T> extends Result<T> {
+  /// Cria uma resultado de sucesso com o valor informado.
   const Success._(this.value);
 
   /// Valor retornado pela operação.
@@ -25,9 +25,9 @@ final class Success<T> extends Response<T> {
   String toString() => 'Response<$T>.success($value)';
 }
 
-/// Representa uma resposta de erro.
-final class Error<T> extends Response<T> {
-  /// Cria uma resposta de erro com a exceção informada.
+/// Representa uma resultado de erro.
+final class Error<T> extends Result<T> {
+  /// Cria uma resultado de erro com a exceção informada.
   const Error._(this.error);
 
   /// Exceção que descreve o erro ocorrido.

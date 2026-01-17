@@ -6,21 +6,21 @@ import '../services/fake_api_client.dart';
 class FakeWorkListingRepository extends WorkListingRepository {
   FakeWorkListingRepository() : super(FakeApiClient());
 
-  Response<List<WorkListing>>? response;
-  Response<List<WorkListing>>? filterResponse;
+  Result<List<WorkListing>>? response;
+  Result<List<WorkListing>>? filterResponse;
 
   @override
-  Future<Response<List<WorkListing>>> getAll() async {
-    return response ?? Response.success([]);
+  Future<Result<List<WorkListing>>> getAll() async {
+    return response ?? Result.success([]);
   }
 
   @override
-  Future<Response<List<WorkListing>>> getByCategory(int categoryId) async {
-    return filterResponse ?? Response.success([]);
+  Future<Result<List<WorkListing>>> getByCategory(int categoryId) async {
+    return filterResponse ?? Result.success([]);
   }
 
   @override
-  Future<Response<List<WorkListing>>> getByTerm(String term) async {
-    return response ?? Response.success([]);
+  Future<Result<List<WorkListing>>> getByTerm(String term) async {
+    return response ?? Result.success([]);
   }
 }

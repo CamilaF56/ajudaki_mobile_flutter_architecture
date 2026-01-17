@@ -7,8 +7,8 @@ class FakeApiClient extends ApiClient {
   FakeApiClient() : super();
 
   @override
-  Future<Response<Map<int, WorkListing>>> getWorkListings() async {
-    return Response.success({
+  Future<Result<Map<int, WorkListing>>> getWorkListings() async {
+    return Result.success({
       1: WorkListing(
         id: 1,
         title: 'Trocar tomada',
@@ -25,7 +25,7 @@ class FakeApiClient extends ApiClient {
   }
 
   @override
-  Future<Response<Map<int, WorkListing>>> searchWorkListings(
+  Future<Result<Map<int, WorkListing>>> searchWorkListings(
     String? terms,
     int? workCategoryId,
   ) async {
@@ -50,17 +50,17 @@ class FakeApiClient extends ApiClient {
           );
         }
 
-          return Response.success(
+          return Result.success(
             Map.fromEntries(entries),
           );
         }(),
-        Error(error: final error) => Response.error(error),
+        Error(error: final error) => Result.error(error),
       };
   }
 
   @override
-  Future<Response<Map<int, WorkCategory>>> getWorkCategories() async {
-    return Response.success({
+  Future<Result<Map<int, WorkCategory>>> getWorkCategories() async {
+    return Result.success({
       1: WorkCategory(
         id: 1,
         name: 'Elétrica'

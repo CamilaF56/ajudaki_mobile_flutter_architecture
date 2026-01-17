@@ -15,7 +15,7 @@ class WorkCategoryRepository {
   ///
   /// Caso exista cache, os dados são retornados diretamente.
   /// Caso contrário, a lista é buscada na API.
-  Future<Response<List<WorkCategory>>> getAll() async {
+  Future<Result<List<WorkCategory>>> getAll() async {
     if (_cache == null) {
       final result = await _apiClient.getWorkCategories();
 
@@ -24,6 +24,6 @@ class WorkCategoryRepository {
       }
     }
 
-    return Response.success(_cache!);
+    return Result.success(_cache!);
   }
 }

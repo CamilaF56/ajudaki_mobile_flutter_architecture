@@ -15,7 +15,7 @@ class WorkListingRepository {
   ///
   /// Caso exista cache, os dados são retornados diretamente.
   /// Caso contrário, a lista é buscada na API.
-  Future<Response<List<WorkListing>>> getAll() async {
+  Future<Result<List<WorkListing>>> getAll() async {
     if (_cache == null) {
       final result = await _apiClient.getWorkListings();
 
@@ -24,21 +24,21 @@ class WorkListingRepository {
       }
     }
     
-    return Response.success(_cache!);
+    return Result.success(_cache!);
   }
 
   /// Retorna os anúncios filtrados por categoria.
   ///
   /// Caso exista cache, o filtro é aplicado localmente.
   /// Caso contrário, a busca é realizada via API.
-  Future<Response<List<WorkListing>>> getByCategory(
+  Future<Result<List<WorkListing>>> getByCategory(
     final int categoryId,
   ) async {
     if (_cache == null) {
       final result = await _apiClient.searchWorkListings(null, categoryId);
 
       if (result is Success<Map<int, WorkListing>>) {
-        return Response.success(result.value.values.toList());
+        return Result.success(result.value.values.toList());
       }
     }
 
@@ -48,13 +48,13 @@ class WorkListingRepository {
         workListing.workType?.workCategory?.id == categoryId,
     ).toList();
 
-    return Response.success(filtered);
+    return Result.success(filtered);
   }
 
   /// Retorna os anúncios filtrados pelo termo de busca.
   ///
   /// A busca é realizada via API.
-  Future<Response<List<WorkListing>>> getByTerm(final String terms) async {
+  Future<Result<List<WorkListing>>> getByTerm(final String terms) async {
     final result = await _apiClient.searchWorkListings(terms, null);
 
     List<WorkListing>? list;
@@ -62,6 +62,6 @@ class WorkListingRepository {
       list = result.value.values.toList();
     }
 
-    return Response.success(list!);
+    return Result.success(list!);
   }
 }
