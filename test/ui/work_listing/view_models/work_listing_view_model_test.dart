@@ -1,7 +1,7 @@
 import 'package:ajudaki_mobile_flutter_architecture/models/work_category.dart';
 import 'package:ajudaki_mobile_flutter_architecture/models/work_listing.dart';
 import 'package:ajudaki_mobile_flutter_architecture/ui/work_listing/view_models/work_listing_view_model.dart';
-import 'package:ajudaki_mobile_flutter_architecture/utils/response.dart';
+import 'package:ajudaki_mobile_flutter_architecture/utils/result.dart';
 import 'package:flutter_test/flutter_test.dart';
 import '../../../../testing/fakes/repositories/fake_work_category_repository.dart';
 import '../../../../testing/fakes/repositories/fake_work_listing_repository.dart';

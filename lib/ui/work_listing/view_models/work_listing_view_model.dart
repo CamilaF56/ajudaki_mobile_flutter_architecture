@@ -3,7 +3,7 @@ import '../../../data/repositories/work_category_repository.dart';
 import '../../../data/repositories/work_listing_repository.dart';
 import '../../../models/work_category.dart';
 import '../../../models/work_listing.dart';
-import '../../../utils/response.dart';
+import '../../../utils/result.dart';
 
 /// ViewModel responsável por gerenciar o estado da listagem de trabalhos.
 ///

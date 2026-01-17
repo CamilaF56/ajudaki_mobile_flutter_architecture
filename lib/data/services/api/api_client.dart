@@ -1,6 +1,6 @@
 import '../../../models/work_category.dart';
 import '../../../models/work_listing.dart';
-import '../../../utils/response.dart';
+import '../../../utils/result.dart';
 import 'http_get_helper.dart';
 
 /// Cliente responsável pela comunicação HTTP com a API backend.

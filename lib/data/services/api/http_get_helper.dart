@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import '../../../utils/response.dart';
+import '../../../utils/result.dart';
 
 /// Helper responsável por realizar requisições HTTP GET.
 ///
