@@ -21,6 +21,6 @@ class FakeWorkListingRepository extends WorkListingRepository {
 
   @override
   Future<Result<List<WorkListing>>> getByTerm(String term) async {
-    return response ?? Result.success([]);
+    return filterResponse ?? Result.success([]);
   }
 }
