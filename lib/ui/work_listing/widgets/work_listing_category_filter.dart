@@ -42,7 +42,14 @@ class WorkListingCategoryFilter extends StatelessWidget {
                     ),
                   )
                   .toList(),
-              onChanged: onCategoryChanged,
+              onChanged:  (final WorkCategory? value) {
+                if (value == selectedCategory) {
+                  // Same value selected → remove filter
+                  onCategoryChanged(null);
+                } else {
+                  onCategoryChanged(value);
+                }
+              },
               decoration: const InputDecoration(
                 focusedBorder: UnderlineInputBorder(
                   borderSide: BorderSide(
@@ -67,8 +74,7 @@ class WorkListingCategoryFilter extends StatelessWidget {
       )
       ..add(
         ObjectFlagProperty<ValueChanged<WorkCategory>?>.has(
-          'onCategoryChanged',
-          onCategoryChanged,
+          'onCategoryChanged',onCategoryChanged
         ),
       );
   }

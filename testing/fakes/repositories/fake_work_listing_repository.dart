@@ -7,7 +7,6 @@ class FakeWorkListingRepository extends WorkListingRepository {
   FakeWorkListingRepository() : super(FakeApiClient());
 
   Result<List<WorkListing>>? response;
-  Result<List<WorkListing>>? filterResponse;
 
   @override
   Future<Result<List<WorkListing>>> getAll() async {
@@ -16,11 +15,11 @@ class FakeWorkListingRepository extends WorkListingRepository {
 
   @override
   Future<Result<List<WorkListing>>> getByCategory(int categoryId) async {
-    return filterResponse ?? Result.success([]);
+    return response ?? Result.success([]);
   }
 
   @override
   Future<Result<List<WorkListing>>> getByTerm(String term) async {
-    return filterResponse ?? Result.success([]);
+    return response ?? Result.success([]);
   }
 }

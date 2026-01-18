@@ -157,7 +157,7 @@ void main() {
       final category = WorkCategory(id: 1, name: 'Elétrica');
 
       final listingRepo = FakeWorkListingRepository()
-        ..filterResponse = Result.success([
+        ..response = Result.success([
           WorkListing(
             id: 3,
             title: 'Instalar chuveiro',
@@ -182,7 +182,7 @@ void main() {
       final category = WorkCategory(id: 1, name: 'Elétrica');
 
       final listingRepo = FakeWorkListingRepository()
-        ..filterResponse = Result.error(Exception('erro filtro'));
+        ..response = Result.error(Exception('erro filtro'));
 
       final viewModel = WorkListingViewModel(
         workListingRepository: listingRepo,
