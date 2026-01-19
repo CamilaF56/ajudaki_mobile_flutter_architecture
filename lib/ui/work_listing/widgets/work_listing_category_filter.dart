@@ -42,7 +42,7 @@ class WorkListingCategoryFilter extends StatelessWidget {
                     ),
                   )
                   .toList(),
-              onChanged:  (final WorkCategory? value) {
+              onChanged:  (final value) {
                 if (value == selectedCategory) {
                   // Same value selected → remove filter
                   onCategoryChanged(null);
