@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import '../../../models/work_category.dart';
+import '../../../domain/work_category.dart';
 
 /// Widget responsável por exibir os filtros de área de atuação.
 ///
@@ -42,7 +42,7 @@ class WorkListingCategoryFilter extends StatelessWidget {
                     ),
                   )
                   .toList(),
-              onChanged:  (final value) {
+              onChanged: (final value) {
                 if (value == selectedCategory) {
                   // Same value selected → remove filter
                   onCategoryChanged(null);
@@ -74,7 +74,8 @@ class WorkListingCategoryFilter extends StatelessWidget {
       )
       ..add(
         ObjectFlagProperty<ValueChanged<WorkCategory>?>.has(
-          'onCategoryChanged',onCategoryChanged
+          'onCategoryChanged',
+          onCategoryChanged,
         ),
       );
   }

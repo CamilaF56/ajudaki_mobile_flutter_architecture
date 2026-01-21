@@ -1,6 +1,6 @@
 import 'package:ajudaki_mobile_flutter_architecture/data/services/api/api_client.dart';
-import 'package:ajudaki_mobile_flutter_architecture/models/work_listing.dart';
-import 'package:ajudaki_mobile_flutter_architecture/models/work_category.dart';
+import 'package:ajudaki_mobile_flutter_architecture/domain/work_listing.dart';
+import 'package:ajudaki_mobile_flutter_architecture/domain/work_category.dart';
 import 'package:ajudaki_mobile_flutter_architecture/utils/result.dart';
 
 class FakeApiClient extends ApiClient {
@@ -33,14 +33,14 @@ class FakeApiClient extends ApiClient {
     final normalized = terms?.toLowerCase();
 
     return switch (result) {
-        Ok(value: final map) => () {
-          var entries = map.entries;
+      Ok(value: final map) => () {
+        var entries = map.entries;
 
-          if (normalized != null && normalized.isNotEmpty) {
-            entries = entries.where(
-              (e) => e.value.title.toLowerCase().contains(normalized),
-            );
-          }
+        if (normalized != null && normalized.isNotEmpty) {
+          entries = entries.where(
+            (e) => e.value.title.toLowerCase().contains(normalized),
+          );
+        }
 
         if (workCategoryId != null) {
           entries = entries.where(
@@ -50,25 +50,17 @@ class FakeApiClient extends ApiClient {
           );
         }
 
-          return Result.success(
-            Map.fromEntries(entries),
-          );
-        }(),
-        Error(error: final error) => Result.error(error),
-      };
+        return Result.success(Map.fromEntries(entries));
+      }(),
+      Error(error: final error) => Result.error(error),
+    };
   }
 
   @override
   Future<Result<Map<int, WorkCategory>>> getWorkCategories() async {
     return Result.success({
-      1: WorkCategory(
-        id: 1,
-        name: 'Elétrica'
-      ),
-      2: WorkCategory(
-        id: 2,
-        name: 'Hidráulica'
-      ),
+      1: WorkCategory(id: 1, name: 'Elétrica'),
+      2: WorkCategory(id: 2, name: 'Hidráulica'),
     });
   }
 }

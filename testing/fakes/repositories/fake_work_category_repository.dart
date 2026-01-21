@@ -1,5 +1,5 @@
 import 'package:ajudaki_mobile_flutter_architecture/data/repositories/work_category_repository.dart';
-import 'package:ajudaki_mobile_flutter_architecture/models/work_category.dart';
+import 'package:ajudaki_mobile_flutter_architecture/domain/work_category.dart';
 import 'package:ajudaki_mobile_flutter_architecture/utils/result.dart';
 import '../services/fake_api_client.dart';
 

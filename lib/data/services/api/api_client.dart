@@ -1,5 +1,5 @@
-import '../../../models/work_category.dart';
-import '../../../models/work_listing.dart';
+import '../../../domain/work_category.dart';
+import '../../../domain/work_listing.dart';
 import '../../../utils/result.dart';
 import 'http_get_helper.dart';
 
@@ -43,6 +43,10 @@ class ApiClient {
   }
 
   /// Retorna todas as categorias de trabalho.
-  Future<Result<Map<int, WorkCategory>>> getWorkCategories() => _helper
-      .getMap(_host, _port, '/api/workcategories', WorkCategory.fromJson);
+  Future<Result<Map<int, WorkCategory>>> getWorkCategories() => _helper.getMap(
+    _host,
+    _port,
+    '/api/workcategories',
+    WorkCategory.fromJson,
+  );
 }
